@@ -13,10 +13,13 @@ SESSION_TOKEN = json.loads(requests.get(
 
 
 def clear():
-      # for windows
+    """
+    Clears the Terminal Window
+    """
+    # for windows
     if name == 'nt':
         _ = system('cls')
-  
+
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
