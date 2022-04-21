@@ -3,11 +3,27 @@ import json
 import random
 from pprint import pprint
 
-ALL_CATEGORIES = json.loads(requests.get(
+CATEGORIES_DATA = json.loads(requests.get(
     "https://opentdb.com/api_category.php").text)["trivia_categories"]
 
 SESSION_TOKEN = json.loads(requests.get(
     "https://opentdb.com/api_token.php?command=request").text)["token"]
+
+def create_categories_dict(categories_data):
+    """
+    Creates a dictionary of quiz
+    categories in the format id: category
+    """
+    cats_dict = {}
+
+    for x in range(len(categories_data)):
+        key, value = categories_data[x].values()
+        cats_dict[key] = value
+
+    return cats_dict
+
+
+QUIZ_CATEGORIES = create_categories_dict(CATEGORIES_DATA)
 
 
 def get_quiz_questions(num_qs, cat, diff):
@@ -102,27 +118,48 @@ def setup_new_quiz():
     # Add loops to ensure all inputs are completed
 
     title = input("What is the name of this Quiz? \n")
-    rounds = int(input("How many rounds should the quiz have? \n"))
-    q_num = int(input("How many questions in each round? \n"))
+
+    while True:
+        try:
+            rounds = int(input("How many rounds should the quiz have? \n"))
+        except ValueError:
+            print("You must enter a number of rounds for the quiz.\n")
+            continue
+        if rounds < 0:
+            print("Sorry, you must enter a positive number.\n")
+            continue
+        else:
+            break
+
+    while True:
+        try:
+            q_num = int(input("How many questions in each round? \n"))
+        except ValueError:
+            print("You must enter a number of questions for each round.\n")
+            continue
+        if q_num < 0:
+            print("Sorry, you must enter a positive number\n")
+            continue
+        else:
+            break
 
     # Possibly ask the categories for each round one by one and
     # add to a list?
 
-    print(get_quiz_categories(ALL_CATEGORIES))
+    print(get_quiz_categories(CATEGORIES_DATA))
 
-    cats = []
+    cats_selected = []
     for x in range(1, rounds+1):
         cat = int(input(f"Chose a category for round {x}: \n"))
-        cats.append(cat)
+        cats_selected.append(cat)
+    
+    print(f"The rounds will be: \n")
 
-    #   cats = [int(x) for x in input(
-    #     f"Chose {rounds} categories from the list, "
-    #     "separated by commas \n").split(",")]
-
-    print(cats)
+    for cat in cats_selected:
+        print(f"{QUIZ_CATEGORIES[cat]}\n")
 
     diff = input(
         "What difficulty should the questions be? \n"
         "Easy, Medium or Hard? \n").lower()
 
-    return Game(title, rounds, q_num, cats, diff)
+    return Game(title, rounds, q_num, cats_selected, diff)
