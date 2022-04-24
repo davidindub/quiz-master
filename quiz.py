@@ -71,8 +71,6 @@ class Game:
         self.rounds = [Round(x+1, self.num_questions, self.categories[x],
                              self.difficulty) for x in range(self.num_rounds)]
 
-        # print(self.__dict__)
-
         for round in self.rounds:
             print(round.__dict__)
 
