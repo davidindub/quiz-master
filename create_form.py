@@ -2,8 +2,7 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
 from apiclient import discovery
 import json
-# from httplib2 import Http
-from create_question import dummy_question, create_gform_question
+from create_question import dummy_round, create_gform_question, create_gform_round
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
 
@@ -30,33 +29,52 @@ form = {
 # Creates the initial form
 result = form_service.forms().create(body=form).execute()
 
-# Makes a sample question to insert to form
-question_to_insert_to_form = create_gform_question(dummy_question)
 
 # JSON to convert the form into a quiz & add description to a Form
-update = {
-    "requests": [
-        {
-            "updateSettings": {
-                "settings": {
-                    "quizSettings": {
-                        "isQuiz": True
-                    }
-                },
-                "updateMask": "quizSettings.isQuiz"
-            }
-        },
-        {
-            "updateFormInfo": {
-                "info": {
-                    "description": "Please complete this quiz based on this week's readings for class."
-                },
-                "updateMask": "description"
-            }
-        },
-        question_to_insert_to_form
-    ]
-}
+def create_google_form(quiz_name, round_obj):
+    """
+    Returns the request body to send to the Google Forms
+    API for a new Quiz Round
+
+    Args:
+    quiz_name: Name for the Quiz
+    round_obj: Object containing a quiz round
+    """
+    round_num = round_obj["round_num"]
+    round_category = round_obj["question_data"][0]["category"]
+
+    body = {
+        "requests": [
+            {
+                "updateSettings": {
+                    "settings": {
+                        "quizSettings": {
+                            "isQuiz": True
+                        }
+                    },
+                    "updateMask": "quizSettings.isQuiz"
+                }
+            },
+            {
+                "updateFormInfo": {
+                    "info": {
+                        "title": quiz_name,
+                        "description": f"Round No. {round_num}: {round_category}"
+                    },
+                    "updateMask": "description"
+                }
+            },
+            create_gform_round(round_obj)
+        ]
+    }
+
+
+    return body
+
+
+update = create_google_form("My First Quiz", dummy_round)
+
+# print(update)
 
 # Updates the form
 question_setting = form_service.forms().batchUpdate(formId=result["formId"],
