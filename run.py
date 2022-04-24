@@ -1,4 +1,5 @@
 import quiz
+from art import tprint
 from datetime import datetime
 
 now = datetime.now()
@@ -24,6 +25,8 @@ def main():
     """
     Code to run on terminal boot
     """
+
+    tprint(" QUIZ\nMASTER\n 2022",font="o8")
 
     print(f"{greeting} Welcome to QuizMaster 2022! \n")
 
