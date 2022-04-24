@@ -68,9 +68,10 @@ class Game:
         self.categories = categories
         self.difficulty = difficulty
 
-        self.rounds = [Round(self.num_questions, self.categories[x],
+        self.rounds = [Round(x+1, self.num_questions, self.categories[x],
                              self.difficulty) for x in range(self.num_rounds)]
-        # print(self.rounds)
+
+        # print(self.__dict__)
 
         for round in self.rounds:
             print(round.__dict__)
@@ -79,12 +80,13 @@ class Game:
 class Round:
     """
     Generates a Quiz Round
-    Expects three parameters: Num of Questions,
+    Expects four parameters: Round Number, Num of Questions,
     Category, and Difficulty
     """
 
-    def __init__(self, num_qs, category, difficulty):
+    def __init__(self, round_num, num_qs, category, difficulty):
 
+        self.round_num = round_num
         self.num_qs = num_qs
         self.category = category
         self.difficulty = difficulty
