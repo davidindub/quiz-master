@@ -1,31 +1,101 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome USER_NAME,
+# QuizMaster
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
 
-## Reminders
+[Link to Live Site](https://www.)
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
 
-## Creating the Heroku app
+## Introduction
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+The project is a Python command line application which can create quiz games using an consisting of several rounds based on the user's desired configuration.
 
-1. `heroku/python`
-2. `heroku/nodejs`
+The user can play along in the terminal, or export a quiz to Google Forms where they can share it with friends where they will be automatically graded.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+## User Stories
 
-Connect your GitHub repository and deploy as normal.
+As a first time user, I need instructions on how to use the applications so I can use it.
 
-## Constraints
+As a user, I want to be able to play a quick quiz round without leaving the terminal.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+As a user, I want to be able to create a custom quiz to play with my friends.
 
------
-Happy coding!
+
+## UX  
+
+
+### Colour Scheme
+ 
+
+### Typography
+
+
+### Wireframes
+
+
+## Features 
+
+### Existing Features
+
+***
+
+__Game Area__
+
+***
+
+__Accessibility__
+
+***
+
+__Favicon__
+
+
+***
+
+### Features Left to Implement
+
+
+## Technologies Used
+
+- [Python](https://www.python.org/)
+- [Git](https://git-scm.com/) for version control.
+- [GitHub](https://github.com/) for storing the repository online during development.
+- GitHub Projects was invaluable throughout the project and helped me keep track of things to do and bugs to fix - you can see [the project's board here](https://github.com/users/davidindub/projects/2).
+- [GitPod](https://gitpod.io/) as a cloud based IDE.
+- [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) for creating and sharing the generated Google Forms.
+- [favicon.io](https://favicon.io/favicon-generator/) to make a favicon for site.
+- [Google Chrome](https://www.google.com/intl/en_ie/chrome/), [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) and [Safari](https://www.apple.com/safari/) for testing on macOS Monterey, Windows 10, iOS 15, iPadOS 15 and Android 10.
+- [Concepts](https://concepts.app/en/) for sketching on an iPad.
+- [Lucid Chart](https://lucid.app/) for making flow charts.
+
+## Testing 
+
+
+## Deployment
+
+
+In order to make a local copy of this project, you can clone it. In your IDE Terminal, type the following command to clone my repository:
+
+- `git clone https://github.com/davidindub/fizzbuzz.git`
+
+Alternatively, if using Gitpod, you can click below to create your own workspace using this repository.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/davidindub/fizzbuzz)
+
+
+## Credits 
+
+### Content 
+
+- [Open Trivia Database](https://opentdb.com/) for the quiz questions.
+- The code for greeting I originally wrote for another application, [Coffee Calculator](https://github.com/davidindub/coffee-calculator/blob/main/greeting.py)
+- [art - ASCII art library for Python](https://github.com/sepandhaghighi/art) for ASCII art.
+
+
+### Media
+
+
+### Acknowledgements
+
+- Thank you to my CI Mentor [Tim Nelson](https://github.com/TravelTimN) for his help and suggestions.
+- Thanks to my partner David for his constant support on my journey to a new career.
