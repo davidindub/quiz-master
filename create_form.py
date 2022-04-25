@@ -2,7 +2,9 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
 from apiclient import discovery
 import json
-from create_gform_items import TEST_ROUND, create_gform_question, create_gform_round, create_gform_text_question
+from create_gform_items import (
+    TEST_ROUND, create_gform_question, create_gform_round,
+    create_gform_text_question)
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
 
@@ -32,7 +34,7 @@ QUIZ_FORM_ID = QUIZ_FORM["formId"]
 QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
 
 
-# JSON to convert the form into a quiz & add description to a Form
+# Convert the form into a quiz & add description to a Form
 def create_google_form(quiz_name, round_obj):
     """
     Returns the request body to send to the Google Forms
@@ -80,8 +82,8 @@ def create_google_form(quiz_name, round_obj):
 update = create_google_form("My First Quiz", TEST_ROUND)
 
 # Updates the form
-question_setting = form_service.forms().batchUpdate(formId=QUIZ_FORM_ID,
-                                                    body=update).execute()
+question_setting = form_service.forms().batchUpdate(
+    formId=QUIZ_FORM_ID, body=update).execute()
 
 
 def add_item_to_gform(item):
@@ -93,7 +95,8 @@ def add_item_to_gform(item):
             item
         ]
     }
-    form_service.forms().batchUpdate(formId=QUIZ_FORM_ID, body=body_text).execute()
+    form_service.forms().batchUpdate(
+        formId=QUIZ_FORM_ID, body=body_text).execute()
 
 
 team_name_q = create_gform_text_question("Team Name")

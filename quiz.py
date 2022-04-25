@@ -74,6 +74,11 @@ class Game:
         for round in self.rounds:
             print(round.__dict__)
 
+    def describe(self):
+        description = f"Quiz title: {self.quiz_title}, {self.num_rounds} rounds with {self.num_questions} {self.difficulty} questions each.\n"
+
+        return description
+
 
 class Round:
     """
@@ -131,8 +136,9 @@ def setup_new_quiz():
 
     # ADD VALIDATION TO INPUTS
 
-    # Add loops to ensure all inputs are completed
+    title, rounds, q_num, cats_selected, diff = ""
 
+    # Ask for the name of the Quiz
     while True:
         try:
             title = input("What is the name of this Quiz? \n")
@@ -147,6 +153,7 @@ def setup_new_quiz():
     sleep(1)
     clear()
 
+    # Ask how many round should the Quiz game have
     while True:
         try:
             rounds = int(input("How many rounds should the quiz have? \n"))
@@ -162,6 +169,7 @@ def setup_new_quiz():
     sleep(1)
     clear()
 
+    # Ask how many questions should be in each round
     while True:
         try:
             q_num = int(input("How many questions in each round? \n"))
@@ -179,6 +187,8 @@ def setup_new_quiz():
     sleep(1)
     clear()
 
+    # Print the list of Categories, ask what category
+    # each round should be
     print_cats = ""
     for key in QUIZ_CATEGORIES:
         print_cats += f"{key}: {QUIZ_CATEGORIES[key]} \n"
@@ -210,6 +220,7 @@ def setup_new_quiz():
     for cat in cats_selected:
         print(f"{QUIZ_CATEGORIES[cat]}\n")
 
+    # Ask what difficulty the questions should be
     while True:
         try:
             diff = input("What difficulty should the questions be? \n \n"
@@ -220,5 +231,6 @@ def setup_new_quiz():
             continue
         else:
             break
+
 
     return Game(title, rounds, q_num, cats_selected, diff)
