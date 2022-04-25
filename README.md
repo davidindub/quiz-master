@@ -73,6 +73,16 @@ __Favicon__
 
 ## Deployment
 
+Due to a recent security breach of Heroku OAuth Tokens, GitHub actions deployment to Heroku was disabled.
+
+I instead deployed to Heroku using the Heroku CLI with the following steps
+    - Create a new App in the Heroku web dashboard named 'quiz-master-2022'
+    - run `heroku login -i` in the command line directory of the project
+    - Enter my Heroku account login details
+    - run `heroku git:remote -a quiz-master-2022` to set git remote heroku to https://git.heroku.com/quiz-master-2022.git
+    - On the Heroku Dashboard Settings, in Config Vars - add the contents of the `client_secrets.json` file which wasn't pushed to a variable called `client_secrets`
+    - run `git push heroku main` to push to Heroku
+
 
 In order to make a local copy of this project, you can clone it. In your IDE Terminal, type the following command to clone my repository:
 
