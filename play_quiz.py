@@ -32,8 +32,8 @@ def play_terminal_quiz(game_obj):
                 try:
                     print(question.question)
 
-                    for answer in all_answers:
-                        print(answer)
+                    for x in range(len(all_answers)):
+                        print(f"({x+1}) {all_answers[x]}")
 
                     answer = int(input("Answer: \n"))
                 except ValueError:
