@@ -4,7 +4,7 @@ import random
 from pprint import pprint
 from os import system, name
 from time import sleep
-from run import clear
+# from run import clear
 
 CATEGORIES_DATA = json.loads(requests.get(
     "https://opentdb.com/api_category.php").text)["trivia_categories"]
@@ -59,13 +59,16 @@ class Game:
         self.rounds = [Round(x+1, self.num_questions, self.categories[x],
                              self.difficulty) for x in range(self.num_rounds)]
 
-        for round in self.rounds:
-            print(round.__dict__)
+        # for round in self.rounds:
+        #     print(round.__dict__)
 
     def describe(self):
-        description = f"Quiz title: {self.quiz_title}, {self.num_rounds} rounds with {self.num_questions} {self.difficulty} questions each.\n"
+        cats_text = [QUIZ_CATEGORIES[cat] for cat in self.categories]
 
-        return description
+        print(f"Quiz title: {self.quiz_title}, {self.num_rounds}"
+              f" rounds of {self.num_questions} {self.difficulty} questions. \n"
+              f"Categories are: \n")
+        print(*cats_text, sep=",")
 
 
 class Round:
@@ -219,6 +222,5 @@ def setup_new_quiz():
             continue
         else:
             break
-
 
     return Game(title, rounds, q_num, cats_selected, diff)

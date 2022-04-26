@@ -1,4 +1,5 @@
-import quiz
+import create_quiz
+import play_quiz
 from art import tprint
 from datetime import datetime
 from os import system, name
@@ -82,11 +83,27 @@ def main():
         except ValueError:
             clear()
             continue
+
         if response == 1:
             print("OK you want a quick quiz!")
+            
+            # Creates a quiz round of 8 easy general knowledge questions
+            quick_quiz = create_quiz.Game("Quick Quiz", 1, 2, [9], "easy")
+
+            quick_quiz.describe()
+
+            play_quiz.play_terminal_quiz(quick_quiz)
+
             break
+
         if response == 2:
             print("OK you want to make a custom Quiz!")
+
+            # Prompts the user to set up their quiz
+            custom_quiz = create_quiz.setup_new_quiz()
+
+            play_quiz.play_terminal_quiz(custom_quiz)
+
             break
         if response == 3:
             print("OK you want to make a Google For Quiz to share with friends")
