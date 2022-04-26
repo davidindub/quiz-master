@@ -4,25 +4,13 @@ import random
 from pprint import pprint
 from os import system, name
 from time import sleep
+from run import clear
 
 CATEGORIES_DATA = json.loads(requests.get(
     "https://opentdb.com/api_category.php").text)["trivia_categories"]
 
 SESSION_TOKEN = json.loads(requests.get(
     "https://opentdb.com/api_token.php?command=request").text)["token"]
-
-
-def clear():
-    """
-    Clears the Terminal Window
-    """
-    # for windows
-    if name == 'nt':
-        _ = system('cls')
-
-    # for mac and linux(here, os.name is 'posix')
-    else:
-        _ = system('clear')
 
 
 def create_categories_dict(categories_data):
