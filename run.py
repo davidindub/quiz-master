@@ -21,9 +21,32 @@ def pick_greeting(hour):
     elif hour < 12:
         return "Good morning!"
     elif hour < 17:
-        return "Good afternoon."
+        return "Good afternoon,"
     else:
-        return "Good evening."
+        return "Good evening,"
+
+
+def ask_yes_no(question):
+    """
+    Asks the user for input for a Yes/No Question
+    and returns a boolean
+
+    Args:
+    question: The question to ask
+    """
+    yes = ["yes", "y"]
+    no = ["no", "n"]
+    done = False
+
+    print(question)
+    while not done:
+        choice = input().lower()
+        if choice in yes:
+            return True
+        elif choice in no:
+            return False
+        else:
+            print("Please respond [Y]es or [N]o")
 
 
 def clear():
