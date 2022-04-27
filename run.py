@@ -49,6 +49,11 @@ def ask_yes_no(question):
             print("Please respond [Y]es or [N]o")
 
 
+def ask_any_key():
+    input("Press any key to return to Main Menu.")
+    return
+
+
 def clear():
     """
     Clears the Terminal Window
@@ -70,41 +75,71 @@ def main():
     Code to run on terminal boot
     """
 
-    tprint(" QUIZ\nMASTER\n 2022", font="o8")
-
-    print(f"{greeting} Welcome to Quiz Master 2022! \n")
-    sleep(2)
-
-    # Main Menu:
-    print("Quiz Master Main Menu")
-    print("\n##########################\n")
-
     menu_options = ["(1) Play Quick Quiz Round",
                     "(2) Create Custom Quiz",
-                    "(3) Create a quiz round to share",
-                    "(4) How to Use Quiz Master"]
+                    "(3) Create a Google Form Quiz",
+                    "(4) Help"]
+
+    help_text = """How to Use Quiz Master 2022 \n \n
+    With Quiz Master 2022, you can create and play multiple choice quiz games
+    either to play here in the terminal, or export as a Google Form that
+    you can send to your friends - perfect for running an online table quiz!
+    \n \n
+    (1) Quick Quiz Round \n
+    Play a short Quiz of 5 General Knowledge Questions here in the terminal.
+
+    Chose an answer with the keys 1, 2, 3 or 4 and hit Enter.
+
+    \n \n
+    (2) Create Custom Quiz \n
+    Choose custom settings such as categories, number of questions and
+    difficulty and play here in the terminal.
+    \n \n
+    (3) Create a Google Form Quiz \n
+    Choose custom settings, and then export your Quiz to a Google Form
+    you can share with your friends.
+    You can input your e-mail address and see the results as your friends
+    submit their answers!
+    \n \n
+    See this project on GitHub at https://github.com/davidindub/quiz-master
+    Quiz Master 2022 © David Kelly.
+    """
+
 
     while True:
+        clear()
+
+        tprint(" QUIZ\nMASTER\n 2022", font="o8")
+
+        print(f"{greeting} Welcome to Quiz Master 2022! \n")
+        sleep(2)
+
+        # Main Menu:
+        print("Main Menu")
+        print("\n##########################\n")
+
         try:
             print("Please choose from the following:")
 
             for option in menu_options:
                 print(option)
 
-            response = int(input("What would you like to do? \n"))
+            response = int(input("\nPress Enter to confirm your selection \n"))
         except ValueError:
             clear()
             continue
 
         if response == 1:
             print("OK you want a quick quiz!")
+            clear()
             
             # Creates a quiz round of 8 easy general knowledge questions
             quick_quiz = create_quiz.Game("Quick Quiz", 1, 2, [9], "easy")
 
+            # Play the Quiz Game
             play_quiz.play_terminal_quiz(quick_quiz)
 
-            break
+            continue
 
         if response == 2:
             print("OK you want to make a custom Quiz!")
@@ -119,8 +154,11 @@ def main():
             print("OK you want to make a Google For Quiz to share with friends")
             break
         if response == 4:
-            print("OK you want the help screen")
-            break
+            clear()
+            tprint("HELP", font="o8")
+            print(help_text)
+            ask_any_key()
+            continue
         if response not in [1, 2, 3, 4] or input == "":
             continue
         else:

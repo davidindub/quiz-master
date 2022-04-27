@@ -21,7 +21,7 @@ def play_terminal_quiz(game_obj):
 
             all_answers = (question.incorrect_answers +
                            [question.correct_answer])
-            
+
             # Shuffle the Answers
             random.shuffle(all_answers)
 
@@ -51,14 +51,16 @@ def play_terminal_quiz(game_obj):
                     print("❌ Wrong! ❌")
                     sleep(1)
                     break
-        
+
         total_score += round_score
         print(f"Round {round.round_num} over!")
         print(f"You got {round_score} / {round.num_qs} correct!")
 
-    print(f"Quiz over! Calculating your results............")
+    print(f"Quiz over! Calculating your results............\n")
     sleep(1)
-    print(f"...............................................")
+    print(f"...............................................\n")
     sleep(1)
-    print(f"You got {total_score} / {TOTAL_NUM_QS} questions correct.")
-
+    print(
+        f"You got a total of {total_score} / {TOTAL_NUM_QS} questions correct.\n")
+    sleep(1)
+    input("Press any key to return to Main Menu \n")
