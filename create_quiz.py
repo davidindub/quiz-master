@@ -61,9 +61,9 @@ class Game:
     def describe(self):
         cats_text = [QUIZ_CATEGORIES[cat] for cat in self.categories]
 
-        print(f"Quiz title: {self.quiz_title}, {self.num_rounds}"
+        print(f"Quiz title: {self.quiz_title}\n{self.num_rounds}"
               f" rounds of {self.num_questions} {self.difficulty} questions. \n"
-              f"Categories are: \n")
+              f"\nCategories are:\n")
         print(*cats_text, sep=",")
 
 
@@ -120,107 +120,118 @@ def setup_new_quiz():
     """
     Asks user for inputs and creates a new quiz based on the inputs
     """
-
-    # title, rounds, q_num, cats_selected, diff = ""
-
-    # Ask for the name of the Quiz
-    while True:
-        try:
-            title = str(input("What is the name of this Quiz? \n"))
-        except TypeError:
-            continue
-        if title == "":
-            print("Please enter a name for the quiz. \n")
-            continue
-        else:
-            break
-
-    sleep(1)
     clear()
 
-    # Ask how many round should the Quiz game have
     while True:
-        try:
-            rounds = int(input("How many rounds should the quiz have? \n"))
-        except ValueError:
-            print("You must enter a number of rounds for the quiz.\n")
-            continue
-        if rounds < 0:
-            print("Sorry, you must enter a positive number.\n")
-            continue
-        if rounds > 10:
-            print("Sorry, you can only have a maximum of 10 rounds.")
-            continue
-        else:
-            break
-
-    sleep(1)
-    clear()
-
-    # Ask how many questions should be in each round
-    while True:
-        try:
-            q_num = int(input("How many questions in each round? \n"))
-        except ValueError:
-            clear()
-            print("You must enter a number of questions for each round.\n")
-            continue
-        if q_num < 0:
-            clear()
-            print("Sorry, you must enter a positive number\n")
-            continue
-        if q_num > 5:
-            print("Sorry, you can only have a max of 10 questions per round.")
-            continue
-        else:
-            break
-
-    sleep(1)
-    clear()
-
-    # Print the list of Categories, ask what category
-    # each round should be
-    print_cats = ""
-    for key in QUIZ_CATEGORIES:
-        print_cats += f"{key}: {QUIZ_CATEGORIES[key]} \n"
-
-    cats_selected = []
-    for x in range(1, rounds+1):
+        # Ask for the name of the Quiz
         while True:
             try:
-                print("Available Categories:")
-                print(print_cats)
-                cat = int(input(f"Choose a category for Round {x}: \n"))
-            except ValueError:
-                clear()
-                print(f"Please enter a valid category number from the list "
-                      f"for round {x}. \n")
+                title = str(input("What is the name of this Quiz? \n"))
+            except TypeError:
                 continue
-            if cat not in list(QUIZ_CATEGORIES):
-                clear()
-                print(f"Please enter a valid category number from the list "
-                      f"for round {x}. \n")
+            if title == "":
+                print("Please enter a name for the quiz. \n")
                 continue
             else:
-                cats_selected.append(cat)
-                clear()
                 break
 
-    print(f"The rounds will be: \n")
+        sleep(1)
+        clear()
 
-    for cat in cats_selected:
-        print(f"{QUIZ_CATEGORIES[cat]}\n")
+        # Ask how many round should the Quiz game have
+        while True:
+            try:
+                rounds = int(input("How many rounds should the quiz have? \n"))
+            except ValueError:
+                print("You must enter a number of rounds for the quiz.\n")
+                continue
+            if rounds < 0:
+                print("Sorry, you must enter a positive number.\n")
+                continue
+            if rounds > 10:
+                print("Sorry, you can only have a maximum of 10 rounds.")
+                continue
+            else:
+                break
 
-    # Ask what difficulty the questions should be
-    while True:
-        try:
-            diff = input("What difficulty should the questions be? \n \n"
-                         "Easy, Medium or Hard? \n").lower()
-        except ValueError:
-            continue
-        if diff not in ["easy", "medium", "hard"]:
-            continue
+        sleep(1)
+        clear()
+
+        # Ask how many questions should be in each round
+        while True:
+            try:
+                q_num = int(input("How many questions in each round? \n"))
+            except ValueError:
+                clear()
+                print("You must enter a number of questions for each round.\n")
+                continue
+            if q_num < 0:
+                clear()
+                print("Sorry, you must enter a positive number\n")
+                continue
+            if q_num > 5:
+                print("Sorry, you can only have a max of 10 questions per round.")
+                continue
+            else:
+                break
+
+        sleep(1)
+        clear()
+
+        # Print the list of Categories, ask what category
+        # each round should be
+        print_cats = ""
+        for key in QUIZ_CATEGORIES:
+            print_cats += f"{key}: {QUIZ_CATEGORIES[key]} \n"
+
+        cats_selected = []
+        for x in range(1, rounds+1):
+            while True:
+                try:
+                    print("Available Categories:")
+                    print(print_cats)
+                    cat = int(input(f"Choose a category for Round {x}: \n"))
+                except ValueError:
+                    clear()
+                    print(f"Please enter a valid category number from the list "
+                        f"for round {x}. \n")
+                    continue
+                if cat not in list(QUIZ_CATEGORIES):
+                    clear()
+                    print(f"Please enter a valid category number from the list "
+                        f"for round {x}. \n")
+                    continue
+                else:
+                    cats_selected.append(cat)
+                    clear()
+                    break
+        
+        sleep(1)
+        clear()
+
+        # Ask what difficulty the questions should be
+        while True:
+            try:
+                diff = input("What difficulty should the questions be? \n \n"
+                            "Easy, Medium or Hard? \n").lower()
+            except ValueError:
+                continue
+            if diff not in ["easy", "medium", "hard"]:
+                continue
+            else:
+                break
+
+        sleep(1)
+        clear()
+
+        game_obj = Game(title, rounds, q_num, cats_selected, diff)
+
+        game_obj.describe()
+
+        if ask_yes_no("Are these settings correct?"):
+            return game_obj
         else:
-            break
-
-    return Game(title, rounds, q_num, cats_selected, diff)
+            print("Okay, let's try again")
+            sleep(1)
+            clear()
+            continue

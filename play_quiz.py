@@ -34,6 +34,8 @@ def play_terminal_quiz(game_obj):
 
             while True:
                 try:
+                    sleep(1)
+                    clear()
                     print(question.question)
 
                     for x in range(len(all_answers)):
@@ -46,16 +48,12 @@ def play_terminal_quiz(game_obj):
                 if answer == expected_answer:
                     print("\n ✅ Correct! ✅ \n")
                     round_score += 1
-                    sleep(1)
-                    clear()
                     break
                 if answer not in [1, 2, 3, 4]:
                     print("Please enter an answer 1, 2, 3 or 4")
                     continue
                 else:
                     print("❌ Wrong! ❌")
-                    sleep(1)
-                    clear()
                     break
 
         total_score += round_score

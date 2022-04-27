@@ -3,8 +3,8 @@ from google.auth.transport.requests import AuthorizedSession
 from apiclient import discovery
 import json
 from create_gform_items import (
-    TEST_ROUND, create_gform_question, create_gform_round,
-    create_gform_text_question)
+    TEST_ROUND, TEST_GAME, create_gform_question, create_gform_round,
+    create_gform_text_question, create_gform_game)
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
 
@@ -35,21 +35,19 @@ QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
 
 
 # Convert the form into a quiz & add description to a Form
-def create_google_form(quiz_name, round_obj):
+def create_google_form(game_obj):
     """
     Returns the request body to send to the Google Forms
-    API for a new Quiz Round
+    API for a new Quiz Game
 
     Args:
-    quiz_name: Name for the Quiz
-    round_obj: Object containing a quiz round
+    game_obj: A Quiz Game Object
     """
-    round_num = round_obj["round_num"]
-    round_category = round_obj["question_data"][0]["category"]
+    # round_num = round_obj["round_num"]
+    # round_category = round_obj["question_data"][0]["category"]
 
-    form_questions = create_gform_round(round_obj)
-
-    # create_gform_text_question("Team Name")
+    # form_questions = create_gform_round(round_obj)
+    form_questions = create_gform_game(game_obj)
 
     body = {
         "requests": [
@@ -66,8 +64,8 @@ def create_google_form(quiz_name, round_obj):
             {
                 "updateFormInfo": {
                     "info": {
-                        "title": quiz_name,
-                        "description": f"Round {round_num}: {round_category}"
+                        "title": game_obj["quiz_title"],
+                        "description": f""
                     },
                     "updateMask": "*"
                 }
@@ -79,7 +77,7 @@ def create_google_form(quiz_name, round_obj):
     return body
 
 
-update = create_google_form("My First Quiz", TEST_ROUND)
+update = create_google_form(TEST_GAME)
 
 # Updates the form
 question_setting = form_service.forms().batchUpdate(

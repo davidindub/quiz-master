@@ -11,17 +11,17 @@ def ask_yes_no(question):
     """
     yes = ["yes", "y"]
     no = ["no", "n"]
-    done = False
 
-    print(question)
-    while not done:
+    print(f"\n{question} \n\ny/n\n")
+    while True:
         choice = input().lower()
         if choice in yes:
             return True
         elif choice in no:
             return False
         else:
-            print("Please respond [Y]es or [N]o")
+            print("[Y]es or [N]o")
+            continue
 
 
 def ask_any_key():

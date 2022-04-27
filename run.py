@@ -91,11 +91,9 @@ def main():
             continue
 
         if response == 1:
-            print("OK you want a quick quiz!")
-            clear()
-            
             # Creates a quiz round of 8 easy general knowledge questions
-            quick_quiz = create_quiz.Game("Quick Quiz", 1, 2, [9], "easy")
+            quick_quiz = create_quiz.Game("Quick Quiz", 1, 8, [9], "easy")
+            print(quick_quiz.__dict__)
 
             # Play the Quiz Game
             play_quiz.play_terminal_quiz(quick_quiz)
@@ -116,7 +114,7 @@ def main():
             print("OK you want to make a Google For Quiz to share with friends")
 
             google_quiz = create_quiz.setup_new_quiz()
-            
+
             break
         if response == 4:
             clear()

@@ -25,6 +25,50 @@ TEST_ROUND = {'round_num': 1, 'num_qs': 5, 'category': 9, 'difficulty': 'medium'
                    'question': 'Which American manufactured submachine gun was informally known by the American soldiers that used it as &quot;Grease Gun&quot;?',
                    'correct_answer': 'M3', 'incorrect_answers': ['Colt 9mm', 'Thompson', 'MAC-10']}]}
 
+TEST_GAME = {'quiz_title': 'Quick Quiz', 'num_rounds': 2, 'num_questions': 3, 'categories': [9, 9], 'difficulty': 'easy', 'rounds': [{'round_num': 1, 'num_qs': 5, 'category': 9, 'difficulty': 'medium',
+                                                                                                                                      'question_data':
+                                                                                                                                      [{'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                        'question': 'Which essential condiment is also known as Japanese horseradish?',
+                                                                                                                                        'correct_answer': 'Wasabi ',
+                                                                                                                                        'incorrect_answers': ['Mentsuyu', 'Karashi', 'Ponzu']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'What is the Swedish word for &quot;window&quot;?',
+                                                                                                                                           'correct_answer': 'F&ouml;nster',
+                                                                                                                                           'incorrect_answers': ['H&aring;l', 'Sk&auml;rm', 'Ruta']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'Amsterdam Centraal station is twinned with what station?',
+                                                                                                                                           'correct_answer': 'London Liverpool Street',
+                                                                                                                                           'incorrect_answers': ['Frankfurt (Main) Hauptbahnhof', 'Paris Gare du Nord', 'Brussels Midi']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'Computer manufacturer Compaq was acquired for $25 billion dollars in 2002 by which company?',
+                                                                                                                                           'correct_answer': 'Hewlett-Packard',
+                                                                                                                                           'incorrect_answers': ['Toshiba', 'Asus', 'Dell']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'Which American manufactured submachine gun was informally known by the American soldiers that used it as &quot;Grease Gun&quot;?',
+                                                                                                                                           'correct_answer': 'M3', 'incorrect_answers': ['Colt 9mm', 'Thompson', 'MAC-10']}]},
+
+                                                                                                                                     {'round_num': 2, 'num_qs': 5, 'category': 9, 'difficulty': 'medium',
+                                                                                                                                      'question_data':
+                                                                                                                                      [{'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                        'question': 'Which essential condiment is also known as Japanese horseradish?',
+                                                                                                                                        'correct_answer': 'Wasabi ',
+                                                                                                                                        'incorrect_answers': ['Mentsuyu', 'Karashi', 'Ponzu']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'What is the Swedish word for &quot;window&quot;?',
+                                                                                                                                           'correct_answer': 'F&ouml;nster',
+                                                                                                                                           'incorrect_answers': ['H&aring;l', 'Sk&auml;rm', 'Ruta']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'Amsterdam Centraal station is twinned with what station?',
+                                                                                                                                           'correct_answer': 'London Liverpool Street',
+                                                                                                                                           'incorrect_answers': ['Frankfurt (Main) Hauptbahnhof', 'Paris Gare du Nord', 'Brussels Midi']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'Computer manufacturer Compaq was acquired for $25 billion dollars in 2002 by which company?',
+                                                                                                                                           'correct_answer': 'Hewlett-Packard',
+                                                                                                                                           'incorrect_answers': ['Toshiba', 'Asus', 'Dell']},
+                                                                                                                                          {'category': 'General Knowledge', 'type': 'multiple', 'difficulty': 'medium',
+                                                                                                                                           'question': 'Which American manufactured submachine gun was informally known by the American soldiers that used it as &quot;Grease Gun&quot;?',
+                                                                                                                                           'correct_answer': 'M3', 'incorrect_answers': ['Colt 9mm', 'Thompson', 'MAC-10']}]}]}
+
 
 def create_gform_question(question_obj):
     """
@@ -78,22 +122,22 @@ def create_gform_text_question(question_to_ask):
     question_to_ask: The Question to ask
     """
     return {
-            "createItem": {
-                "item": {
-                    "title": question_to_ask,
-                    "questionItem":{
-                        "question": {
-                            "required": True,
-                            "textQuestion": {
-                               "paragraph": False
-                            }
-                        },
+        "createItem": {
+            "item": {
+                "title": question_to_ask,
+                "questionItem": {
+                    "question": {
+                        "required": True,
+                        "textQuestion": {
+                            "paragraph": False
+                        }
                     },
                 },
-                "location": {
-                    "index": 0
-                }
+            },
+            "location": {
+                "index": 0
             }
+        }
     }
 
 
@@ -113,6 +157,25 @@ def create_gform_round(round_obj):
 
     for question in questions:
         form_items.append(create_gform_question(question))
+
+    return form_items
+
+
+def create_gform_game(game_obj):
+    """
+    Takes a quiz game python object and returns a list
+    of 'createItem' objects to send to the Google Forms
+    API
+
+    Args:
+        game_obj: A Quiz Game object
+    """
+
+    form_items = []
+    rounds = game_obj["rounds"]
+
+    for round in rounds:
+        form_items.append(create_gform_round(round))
 
     return form_items
 
