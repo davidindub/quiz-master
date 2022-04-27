@@ -107,4 +107,4 @@ getresult = form_service.forms().get(formId=QUIZ_FORM["formId"]).execute()
 # print(getresult)
 
 print(f"Form ID: {QUIZ_FORM_ID}")
-print(f"Form URL: {QUIZ_FORM_URL}")
+print(f"Your Google Form Quiz is ready to share: {QUIZ_FORM_URL}")
