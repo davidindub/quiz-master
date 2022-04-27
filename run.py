@@ -2,6 +2,7 @@ from art import tprint
 from datetime import datetime
 from os import system, name
 from time import sleep
+from helpers import ask_any_key, ask_yes_no, clear
 import create_quiz
 import play_quiz
 
@@ -24,47 +25,6 @@ def pick_greeting(hour):
         return "Good afternoon,"
     else:
         return "Good evening,"
-
-
-def ask_yes_no(question):
-    """
-    Asks the user for input for a Yes/No Question
-    and returns a boolean
-
-    Args:
-    question: The question to ask
-    """
-    yes = ["yes", "y"]
-    no = ["no", "n"]
-    done = False
-
-    print(question)
-    while not done:
-        choice = input().lower()
-        if choice in yes:
-            return True
-        elif choice in no:
-            return False
-        else:
-            print("Please respond [Y]es or [N]o")
-
-
-def ask_any_key():
-    input("Press any key to return to Main Menu.")
-    return
-
-
-def clear():
-    """
-    Clears the Terminal Window
-    """
-    # for Windows
-    if name == 'nt':
-        _ = system('cls')
-
-    # for macOS/Linux
-    else:
-        _ = system('clear')
 
 
 greeting = pick_greeting(current_hour)
@@ -105,21 +65,22 @@ def main():
     Quiz Master 2022 © David Kelly.
     """
 
+    clear()
+
+    tprint(" QUIZ\nMASTER\n 2022", font="o8")
+
+    print(f"{greeting} Welcome to Quiz Master 2022! \n")
+    sleep(2)        
 
     while True:
         clear()
-
-        tprint(" QUIZ\nMASTER\n 2022", font="o8")
-
-        print(f"{greeting} Welcome to Quiz Master 2022! \n")
-        sleep(2)
 
         # Main Menu:
         print("Main Menu")
         print("\n##########################\n")
 
         try:
-            print("Please choose from the following:")
+            print("Please choose from the following:\n")
 
             for option in menu_options:
                 print(option)
@@ -147,11 +108,15 @@ def main():
             # Prompts the user to set up their quiz
             custom_quiz = create_quiz.setup_new_quiz()
 
+            # Play the Quiz the user just set up
             play_quiz.play_terminal_quiz(custom_quiz)
 
-            break
+            continue
         if response == 3:
             print("OK you want to make a Google For Quiz to share with friends")
+
+            google_quiz = create_quiz.setup_new_quiz()
+            
             break
         if response == 4:
             clear()

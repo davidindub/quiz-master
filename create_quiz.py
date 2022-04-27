@@ -1,10 +1,9 @@
+from helpers import ask_any_key, ask_yes_no, clear
 import requests
 import json
 import random
 from pprint import pprint
-from os import system, name
 from time import sleep
-# from run import clear, ask_yes_no
 
 CATEGORIES_DATA = json.loads(requests.get(
     "https://opentdb.com/api_category.php").text)["trivia_categories"]
@@ -122,13 +121,13 @@ def setup_new_quiz():
     Asks user for inputs and creates a new quiz based on the inputs
     """
 
-    title, rounds, q_num, cats_selected, diff = ""
+    # title, rounds, q_num, cats_selected, diff = ""
 
     # Ask for the name of the Quiz
     while True:
         try:
-            title = input("What is the name of this Quiz? \n")
-        except NameError:
+            title = str(input("What is the name of this Quiz? \n"))
+        except TypeError:
             continue
         if title == "":
             print("Please enter a name for the quiz. \n")
@@ -149,6 +148,9 @@ def setup_new_quiz():
         if rounds < 0:
             print("Sorry, you must enter a positive number.\n")
             continue
+        if rounds > 10:
+            print("Sorry, you can only have a maximum of 10 rounds.")
+            continue
         else:
             break
 
@@ -166,6 +168,9 @@ def setup_new_quiz():
         if q_num < 0:
             clear()
             print("Sorry, you must enter a positive number\n")
+            continue
+        if q_num > 5:
+            print("Sorry, you can only have a max of 10 questions per round.")
             continue
         else:
             break
@@ -185,16 +190,16 @@ def setup_new_quiz():
             try:
                 print("Available Categories:")
                 print(print_cats)
-                cat = int(input(f"Choose a category for round {x}: \n"))
+                cat = int(input(f"Choose a category for Round {x}: \n"))
             except ValueError:
                 clear()
                 print(f"Please enter a valid category number from the list "
-                    f"for round {x}. \n")
+                      f"for round {x}. \n")
                 continue
             if cat not in list(QUIZ_CATEGORIES):
                 clear()
                 print(f"Please enter a valid category number from the list "
-                    f"for round {x}. \n")
+                      f"for round {x}. \n")
                 continue
             else:
                 cats_selected.append(cat)
@@ -210,7 +215,7 @@ def setup_new_quiz():
     while True:
         try:
             diff = input("What difficulty should the questions be? \n \n"
-                        "Easy, Medium or Hard? \n").lower()
+                         "Easy, Medium or Hard? \n").lower()
         except ValueError:
             continue
         if diff not in ["easy", "medium", "hard"]:

@@ -1,6 +1,8 @@
 import random
 from time import sleep
-
+from art import tprint
+from helpers import clear, ask_any_key
+from create_quiz import QUIZ_CATEGORIES
 
 def play_terminal_quiz(game_obj):
     """
@@ -16,6 +18,8 @@ def play_terminal_quiz(game_obj):
 
     for round in GAME.rounds:
         round_score = 0
+
+        print(f"Round {round.round_num}: {QUIZ_CATEGORIES[round.category]}")
 
         for question in round.questions_list:
 
@@ -35,14 +39,15 @@ def play_terminal_quiz(game_obj):
                     for x in range(len(all_answers)):
                         print(f"({x+1}) {all_answers[x]}")
 
-                    answer = int(input("Answer: \n"))
+                    answer = int(input("\n Answer: \n"))
                 except ValueError:
                     print("Please enter an answer 1, 2, 3 or 4")
                     continue
                 if answer == expected_answer:
-                    print("✅ Correct! ✅")
+                    print("\n ✅ Correct! ✅ \n")
                     round_score += 1
                     sleep(1)
+                    clear()
                     break
                 if answer not in [1, 2, 3, 4]:
                     print("Please enter an answer 1, 2, 3 or 4")
@@ -50,17 +55,22 @@ def play_terminal_quiz(game_obj):
                 else:
                     print("❌ Wrong! ❌")
                     sleep(1)
+                    clear()
                     break
 
         total_score += round_score
         print(f"Round {round.round_num} over!")
-        print(f"You got {round_score} / {round.num_qs} correct!")
+        print(f"You got {round_score} / {round.num_qs} correct "
+              f"in Round {round.round_num}.")
 
-    print(f"Quiz over! Calculating your results............\n")
+    clear()
+    tprint(f"QUIZ\nOVER!", font="o8")
+    print(f"\n Calculating your results............\n")
     sleep(1)
-    print(f"...............................................\n")
+    print(f".......................................\n")
     sleep(1)
     print(
         f"You got a total of {total_score} / {TOTAL_NUM_QS} questions correct.\n")
     sleep(1)
-    input("Press any key to return to Main Menu \n")
+
+    ask_any_key()
