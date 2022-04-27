@@ -20,14 +20,22 @@
             margin: auto;
         }
 
-        button {
-            margin: 0 auto;
-        }
-
-        h1, footer {
+        h1,
+        footer {
             text-align: center;
             padding-top: 2rem;
             color: #FBFFF1;
+        }
+
+        a,
+        a:visited {
+            color: #FBFFF1;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            font-style: bolder;
         }
 
         #terminal {
@@ -39,7 +47,7 @@
         */
 
         .xterm {
-            font-feature-settings: "liga"0;
+            font-feature-settings: "liga" 0;
             position: relative;
             user-select: none;
             -ms-user-select: none;
@@ -179,10 +187,12 @@
             width: 200px;
             height: 40px;
             background-color: #E84610;
-            border: 1px solid grey;
-            color: white;
+            border: 1px solid #FBFFF1;
+            color: #FBFFF1;
+            font: inherit;
+            font-weight: bold;
             text-transform: uppercase;
-            margin: 10px;
+            margin: 0 auto;
             border-radius: 8px;
         }
     </style>

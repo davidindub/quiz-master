@@ -20,6 +20,7 @@ def play_terminal_quiz(game_obj):
         round_score = 0
 
         print(f"Round {round.round_num}: {QUIZ_CATEGORIES[round.category]}")
+        sleep(1)
 
         for question in round.questions_list:
 
@@ -60,6 +61,7 @@ def play_terminal_quiz(game_obj):
         print(f"Round {round.round_num} over!")
         print(f"You got {round_score} / {round.num_qs} correct "
               f"in Round {round.round_num}.")
+        sleep(2)
 
     clear()
     tprint(f"QUIZ\nOVER!", font="o8")

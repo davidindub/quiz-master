@@ -2,6 +2,8 @@ from art import tprint
 from datetime import datetime
 from os import system, name
 from time import sleep
+import sys
+from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
 import create_quiz
 import play_quiz
@@ -40,7 +42,7 @@ def main():
                     "(3) Create a Google Form Quiz",
                     "(4) Help"]
 
-    help_text = """How to Use Quiz Master 2022 \n \n
+    help_text = ["""How to Use Quiz Master 2022 \n \n
     With Quiz Master 2022, you can create and play multiple choice quiz games
     either to play here in the terminal, or export as a Google Form that
     you can send to your friends - perfect for running an online table quiz!
@@ -49,8 +51,8 @@ def main():
     Play a short Quiz of 5 General Knowledge Questions here in the terminal.
 
     Chose an answer with the keys 1, 2, 3 or 4 and hit Enter.
-
-    \n \n
+    """,
+    """
     (2) Create Custom Quiz \n
     Choose custom settings such as categories, number of questions and
     difficulty and play here in the terminal.
@@ -63,13 +65,13 @@ def main():
     \n \n
     See this project on GitHub at https://github.com/davidindub/quiz-master
     Quiz Master 2022 © David Kelly.
-    """
+    """]
 
     clear()
 
     tprint(" QUIZ\nMASTER\n 2022", font="o8")
 
-    print(f"{greeting} Welcome to Quiz Master 2022! \n")
+    cprint(f"{greeting} Welcome to Quiz Master 2022! \n", "green")
     sleep(2)        
 
     while True:
@@ -119,7 +121,10 @@ def main():
         if response == 4:
             clear()
             tprint("HELP", font="o8")
-            print(help_text)
+            print(help_text[0])
+            input("Press any key to read more.\n")
+            clear()
+            print(help_text[1])
             ask_any_key()
             continue
         if response not in [1, 2, 3, 4] or input == "":

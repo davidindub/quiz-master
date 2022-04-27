@@ -2,6 +2,8 @@ from helpers import ask_any_key, ask_yes_no, clear
 import requests
 import json
 import random
+import sys
+from termcolor import colored, cprint
 from pprint import pprint
 from time import sleep
 
@@ -103,18 +105,6 @@ class Question:
         self.correct_answer = correct_answer
         self.incorrect_answers = incorrect_answers
 
-    def ask(self):
-        return self.question
-
-
-def get_quiz_categories(categories):
-
-    print_cats = ""
-    for x in range(len(categories)):
-        print_cats += (f"{categories[x]['id']}: {categories[x]['name']} \n")
-
-    return print_cats
-
 
 def setup_new_quiz():
     """
@@ -126,7 +116,7 @@ def setup_new_quiz():
         # Ask for the name of the Quiz
         while True:
             try:
-                title = str(input("What is the name of this Quiz? \n"))
+                title = str(input("What is the name of your Quiz Game? \n"))
             except TypeError:
                 continue
             if title == "":
@@ -143,13 +133,13 @@ def setup_new_quiz():
             try:
                 rounds = int(input("How many rounds should the quiz have? \n"))
             except ValueError:
-                print("You must enter a number of rounds for the quiz.\n")
+                cprint("You must enter a number of rounds for the quiz.\n", "red")
                 continue
             if rounds < 0:
-                print("Sorry, you must enter a positive number.\n")
+                cprint("Sorry, you must enter a positive number.\n", "red")
                 continue
             if rounds > 10:
-                print("Sorry, you can only have a maximum of 10 rounds.")
+                cprint("Sorry, you can only have a maximum of 10 rounds.", "red")
                 continue
             else:
                 break
@@ -167,10 +157,11 @@ def setup_new_quiz():
                 continue
             if q_num < 0:
                 clear()
-                print("Sorry, you must enter a positive number\n")
+                cprint("Sorry, you must enter a positive number\n", "red")
                 continue
             if q_num > 5:
-                print("Sorry, you can only have a max of 10 questions per round.")
+                cprint("Sorry, you can only have a max of 10"
+                       "questions per round.", "red")
                 continue
             else:
                 break
@@ -193,19 +184,19 @@ def setup_new_quiz():
                     cat = int(input(f"Choose a category for Round {x}: \n"))
                 except ValueError:
                     clear()
-                    print(f"Please enter a valid category number from the list "
-                        f"for round {x}. \n")
+                    cprint(f"Please enter a valid category number from "
+                           f"the list for round {x}. \n", "red")
                     continue
                 if cat not in list(QUIZ_CATEGORIES):
                     clear()
-                    print(f"Please enter a valid category number from the list "
-                        f"for round {x}. \n")
+                    cprint(f"Please enter a valid category number from "
+                           f"the list for round {x}. \n", "red")
                     continue
                 else:
                     cats_selected.append(cat)
                     clear()
                     break
-        
+
         sleep(1)
         clear()
 
@@ -213,7 +204,7 @@ def setup_new_quiz():
         while True:
             try:
                 diff = input("What difficulty should the questions be? \n \n"
-                            "Easy, Medium or Hard? \n").lower()
+                             "Easy, Medium or Hard? \n").lower()
             except ValueError:
                 continue
             if diff not in ["easy", "medium", "hard"]:

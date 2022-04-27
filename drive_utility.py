@@ -23,8 +23,9 @@ def delete_file(file_id):
     """
     try:
         service.files().delete(fileId=file_id).execute()
+        print(f"📁🗑 File deleted: {file_id}")
     except errors.HttpError as error:
-        print(f"An error occurred: {error}")
+        print(f"🚫 An error occurred: {error}")
 
 
 def list_all_files():
@@ -40,12 +41,12 @@ def list_all_files():
         if not items:
             print('No files found.')
         else:
-            print('Files:')
+            print('🗂 Files:')
             for item in items:
                 print(u'{0} ({1})'.format(item['name'], item['id']))
+                # delete_file(item["id"])
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        print(f'🚫 An error occurred: {error}')
 
 
-print("File List")
 list_all_files()
