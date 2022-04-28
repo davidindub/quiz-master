@@ -39,7 +39,7 @@ QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
 
 
 # Convert the form into a quiz & create and add all the questions
-def create_google_form(game_obj):
+def create_form_body(game_obj):
     """
     Returns the request body to send to the Google Forms
     API for a new Quiz Game
@@ -78,13 +78,6 @@ def create_google_form(game_obj):
     return body
 
 
-update = create_google_form(TEST_GAME)
-
-# Updates the form
-question_setting = form_service.forms().batchUpdate(
-    formId=QUIZ_FORM_ID, body=update).execute()
-
-
 def add_item_to_gform(item):
     """
     Adds a Question to Google Form
@@ -98,46 +91,54 @@ def add_item_to_gform(item):
         formId=QUIZ_FORM_ID, body=body_text).execute()
 
 
-team_name_q = create_gform_text_question("Team Name")
+# Updates the form
 
-add_item_to_gform(team_name_q)
+def create_google_form(game_obj):
 
-# Print the result to see it's now a quiz
-getresult = form_service.forms().get(formId=QUIZ_FORM["formId"]).execute()
+    update = create_form_body(game_obj)
 
+    question_setting = form_service.forms().batchUpdate(
+        formId=QUIZ_FORM_ID, body=update).execute()
 
-print(f"Form ID: {QUIZ_FORM_ID}")
-cprint(f"Your Google Form Quiz is ready to share: \n", "green")
-print(f"{QUIZ_FORM_URL} \n")
+    team_name_q = create_gform_text_question("Team Name")
 
-# Ask would the user like to see responses to the form
-print("You can share this form with friends and see their responses")
-ask_form_owner = False
-ask_form_owner = ask_yes_no(
-    "Would you like to be added as an owner of this form?")
+    add_item_to_gform(team_name_q)
 
-while ask_form_owner:
-    input("Please enter the e-mail address of your Google Account "
-          "or enter Q to quit.\n\n")
-    email = input("E-mail Address: \n").lower()
+    # Print the result to see it's now a quiz
+    getresult = form_service.forms().get(formId=QUIZ_FORM["formId"]).execute()
 
-    # Quit to main menu if user types Q or quit
-    if email in ["quit", "q"]:
-        ask_form_owner = False
-        break
+    print(f"Form ID: {QUIZ_FORM_ID}")
+    cprint(f"Your Google Form Quiz is ready to share: \n", "green")
+    print(f"{QUIZ_FORM_URL} \n")
 
-    # Try validate the email address, if valid share Google Form
-    try:
-        email = validate_email(email).email
+    # Ask would the user like to see responses to the form
+    print("You can share this form with friends and see their responses")
+    ask_form_owner = False
+    ask_form_owner = ask_yes_no(
+        "Would you like to be added as an owner of this form?")
 
-        cprint("📨 An e-mail is on the way! Happy Quizzing!")
-        ask_form_owner = False
-        break
+    while ask_form_owner:
+        input("Please enter the e-mail address of your Google Account "
+            "or enter Q to quit.\n\n")
+        email = input("E-mail Address: \n").lower()
 
-    except EmailNotValidError as e:
-        print(str(e))
-        continue
+        # Quit to main menu if user types Q or quit
+        if email in ["quit", "q"]:
+            ask_form_owner = False
+            break
 
-    else:
-        print("📧 Please enter a valid e-mail address!")
-        continue
+        # Try validate the email address, if valid share Google Form
+        try:
+            email = validate_email(email).email
+
+            cprint("📨 An e-mail is on the way! Happy Quizzing!")
+            ask_form_owner = False
+            break
+
+        except EmailNotValidError as e:
+            print(str(e))
+            continue
+
+        else:
+            print("📧 Please enter a valid e-mail address!")
+            continue

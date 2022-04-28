@@ -119,7 +119,7 @@ def main():
 
             google_quiz = create_quiz.setup_new_quiz()
 
-            create_form.create_google_form(google_quiz)
+            create_form.create_form_body(google_quiz)
 
             break
         if response == 4:
