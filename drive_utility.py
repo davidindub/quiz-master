@@ -6,15 +6,15 @@ import json
 from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
 
-credentials = service_account.Credentials.from_service_account_file(
+CREDS = service_account.Credentials.from_service_account_file(
     'client_secrets.json')
 
-scoped_credentials = credentials.with_scopes(
+SCOPED_CREDENTIALS = CREDS.with_scopes(
     ['https://www.googleapis.com/auth/drive'])
 
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-service = discovery.build('drive', 'v3', credentials=scoped_credentials)
+service = discovery.build('drive', 'v3', credentials=SCOPED_CREDENTIALS)
 
 
 def delete_file(file_id):

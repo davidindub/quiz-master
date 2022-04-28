@@ -11,15 +11,15 @@ from create_gform_items import (
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
 
-credentials = service_account.Credentials.from_service_account_file(
+CREDS = service_account.Credentials.from_service_account_file(
     'client_secrets.json')
 
-scoped_credentials = credentials.with_scopes(
+SCOPED_CREDENTIALS = CREDS.with_scopes(
     ['https://www.googleapis.com/auth/forms.body'])
 
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-form_service = discovery.build('forms', 'v1', credentials=scoped_credentials,
+form_service = discovery.build('forms', 'v1', credentials=SCOPED_CREDENTIALS,
                                discoveryServiceUrl=DISCOVERY_DOC,
                                static_discovery=False)
 
@@ -119,7 +119,7 @@ def create_google_form(game_obj):
 
     while ask_form_owner:
         input("Please enter the e-mail address of your Google Account "
-            "or enter Q to quit.\n\n")
+              "or enter Q to quit.\n\n")
         email = input("E-mail Address: \n").lower()
 
         # Quit to main menu if user types Q or quit
