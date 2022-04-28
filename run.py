@@ -53,7 +53,7 @@ def main():
 
     Chose an answer with the keys 1, 2, 3 or 4 and hit Enter.
     """,
-    """
+                 """
     (2) Create Custom Quiz \n
     Choose custom settings such as categories, number of questions and
     difficulty and play here in the terminal.
@@ -73,7 +73,7 @@ def main():
     tprint(" QUIZ\nMASTER\n 2022", font="o8")
 
     cprint(f"{greeting} Welcome to Quiz Master 2022! \n", "green")
-    sleep(2)        
+    sleep(2)
 
     while True:
         clear()
@@ -114,7 +114,8 @@ def main():
 
             continue
         if response == 3:
-            print("OK you want to make a Google For Quiz to share with friends")
+            print("OK you want to make a Google For Quiz"
+                  " to share with friends")
 
             google_quiz = create_quiz.setup_new_quiz()
 
