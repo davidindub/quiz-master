@@ -6,7 +6,7 @@ from email_validator import validate_email, EmailNotValidError
 from helpers import ask_yes_no
 from termcolor import colored, cprint
 from create_gform_items import (
-    TEST_ROUND, TEST_GAME, create_gform_question, create_gform_round,
+    create_gform_question, create_gform_round,
     create_gform_text_question, create_gform_game)
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
