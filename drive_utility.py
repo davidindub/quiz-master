@@ -5,9 +5,16 @@ from apiclient import discovery, errors
 import json
 from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
+import os
+
+if os.path.exists("env.py"):
+    import env  # noqa
+
+SECRET = os.environ.get("ADMIN")
 
 CREDS = service_account.Credentials.from_service_account_file(
     'client_secrets.json')
+
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(
     ['https://www.googleapis.com/auth/drive'])
@@ -80,6 +87,14 @@ def run():
     while True:
         try:
             cprint("Welcome to the Google Drive Management Utility \n", "blue")
+
+            x = input("What is the password??")
+
+            if x == SECRET:
+                print("Correct!")
+            else:
+                print("Nope!")
+                break
 
             for option in menu_options:
                 print(option)
