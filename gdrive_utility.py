@@ -5,16 +5,7 @@ from apiclient import discovery, errors
 import json
 from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
-import os
-
-if os.path.exists("env.py"):
-    import env  # noqa
-
-SECRET = os.environ.get("ADMIN")
-
-CREDS = service_account.Credentials.from_service_account_file(
-    'creds.json')
-
+from create_form import CREDS
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(
     ['https://www.googleapis.com/auth/drive'])
@@ -79,7 +70,36 @@ def delete_all_files():
         print(f"🚫 An error occurred: {error}")
 
 
+def insert_permission(service, file_id, value, perm_type, role):
+    """Insert a new permission.
+    Args:
+      service: Drive API service instance.
+      file_id: ID of the file to insert permission for.
+      value: User or group e-mail address, domain name or None for 'default'
+             type.
+      perm_type: The value 'user', 'group', 'domain' or 'default'.
+      role: The value 'owner', 'writer' or 'reader'.
+    Returns:
+      The inserted permission if successful, None otherwise.
+    """
+    new_permission = {
+        'value': value,
+        'type': perm_type,
+        'role': role
+    }
+    try:
+        return service.permissions().insert(
+            fileId=file_id, body=new_permission).execute()
+    except errors.HttpError as error:
+        print(f"An error occurred: {error}")
+    return None
+
+
 def run():
+    """
+    Displays a terminal menu for managing Google
+    Drive Files
+    """
     menu_options = ["(1) List All Files",
                     "(2) Delete a File based on ID",
                     "(3) Delete ALL Files"]
@@ -87,14 +107,6 @@ def run():
     while True:
         try:
             cprint("Welcome to the Google Drive Management Utility \n", "blue")
-
-            x = input("What is the password??")
-
-            if x == SECRET:
-                print("Correct!")
-            else:
-                print("Nope!")
-                break
 
             for option in menu_options:
                 print(option)
@@ -122,6 +134,3 @@ def run():
                 continue
             else:
                 continue
-
-
-run()

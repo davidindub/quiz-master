@@ -1,13 +1,20 @@
 from art import tprint
 from datetime import datetime
-from os import system, name
+# from os import system, name, environ, path
+import os
 from time import sleep
 import sys
 from termcolor import colored, cprint
+import gdrive_utility
 from helpers import ask_any_key, ask_yes_no, clear
 from create_form import create_google_form
 from create_quiz import *
 from play_quiz import *
+
+if os.path.exists("env.py"):
+    import env  # noqa
+
+SECRET = os.environ.get("ADMIN")
 
 now = datetime.now()
 current_hour = int(now.strftime("%H"))
@@ -132,7 +139,20 @@ def main():
             print(help_text[1])
             ask_any_key()
             continue
-        if response not in [1, 2, 3, 4] or input == "":
+        if response == 999:
+            cprint("Google Drive Utility Login", "blue")
+            x = input("What is the password??")
+
+            if x == SECRET:
+                print("✅ Correct! Loading Google Drive Management....\n")
+                sleep(1)
+                clear()
+                gdrive_utility.run()
+            else:
+                cprint("Nope!", "red")
+                continue
+
+        if response not in [1, 2, 3, 4, 999] or input == "":
             continue
         else:
             break
