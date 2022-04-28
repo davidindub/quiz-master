@@ -64,7 +64,7 @@ def create_form_body(game_obj):
             {
                 "updateFormInfo": {
                     "info": {
-                        "title": game_obj["quiz_title"],
+                        "title": game_obj.quiz_title,
                         "description": f""
                     },
                     "updateMask": "*"

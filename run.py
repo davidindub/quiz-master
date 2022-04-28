@@ -96,12 +96,11 @@ def main():
         if response == 1:
             # Creates a quiz round of 8 easy general knowledge questions
             quick_quiz = Game("Quick Quiz", 1, 8, [9], "easy")
-            print(quick_quiz.__dict__)
 
             # Play the Quiz Game
             play_terminal_quiz(quick_quiz)
 
-            continue
+            # continue
 
         if response == 2:
             print("OK you want to make a custom Quiz!")

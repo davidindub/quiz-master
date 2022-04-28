@@ -103,6 +103,7 @@ def create_gform_question(question_obj):
         question_obj: A Question object
 
     """
+    
     return {
         "createItem": {
             "item": {
@@ -120,10 +121,14 @@ def create_gform_question(question_obj):
                         "choiceQuestion": {
                             "type": "RADIO",
                             "options": [
-                                    {"value": question_obj["correct_answer"]},
-                                    {"value": question_obj["incorrect_answers"][0]},
-                                    {"value": question_obj["incorrect_answers"][1]},
-                                    {"value": question_obj["incorrect_answers"][2]}
+                                    {"value":
+                                     question_obj["correct_answer"]},
+                                    {"value":
+                                     question_obj["incorrect_answers"][0]},
+                                    {"value":
+                                     question_obj["incorrect_answers"][1]},
+                                    {"value":
+                                     question_obj["incorrect_answers"][2]}
                             ],
                             "shuffle": True
                         }
@@ -197,6 +202,7 @@ def create_gform_round(round_obj):
     Args:
         round_obj: A Round object
     """
+    round_obj = round_obj.__dict__
 
     nums_qs = round_obj["num_qs"]
     round_num = round_obj["round_num"]
@@ -223,12 +229,10 @@ def create_gform_game(game_obj):
     """
 
     form_items = []
-    rounds = game_obj["rounds"]
+    rounds = game_obj.rounds
 
     for round in rounds:
         form_items.insert(0, create_gform_round(round))
 
     return form_items
 
-
-round1 = create_gform_round(TEST_ROUND)
