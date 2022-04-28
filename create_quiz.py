@@ -1,6 +1,7 @@
 from helpers import ask_any_key, ask_yes_no, clear
 import requests
 import json
+import html
 import random
 import sys
 from termcolor import colored, cprint
@@ -101,9 +102,9 @@ class Question:
         self.category = category
         self.qtype = type
         self.difficulty = difficulty
-        self.question = question
-        self.correct_answer = correct_answer
-        self.incorrect_answers = incorrect_answers
+        self.question = html.unescape(question)
+        self.correct_answer = html.unescape(correct_answer)
+        self.incorrect_answers = html.unescape(incorrect_answers)
 
 
 def setup_new_quiz():
