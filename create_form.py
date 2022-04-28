@@ -11,8 +11,7 @@ from create_gform_items import (
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
 
-CREDS = service_account.Credentials.from_service_account_file(
-    'client_secrets.json')
+CREDS = service_account.Credentials.from_service_account_file('creds.json')
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(
     ['https://www.googleapis.com/auth/forms.body'])

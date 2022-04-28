@@ -13,7 +13,7 @@ if os.path.exists("env.py"):
 SECRET = os.environ.get("ADMIN")
 
 CREDS = service_account.Credentials.from_service_account_file(
-    'client_secrets.json')
+    'creds.json')
 
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(

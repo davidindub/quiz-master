@@ -7,4 +7,3 @@ __pycache__/
 node_modules/
 .github/
 creds.json
-client_secrets.json

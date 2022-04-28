@@ -5,9 +5,9 @@ from time import sleep
 import sys
 from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
-import create_quiz
-import play_quiz
-import create_form
+from create_form import create_google_form
+from create_quiz import *
+from play_quiz import *
 
 now = datetime.now()
 current_hour = int(now.strftime("%H"))
@@ -95,11 +95,11 @@ def main():
 
         if response == 1:
             # Creates a quiz round of 8 easy general knowledge questions
-            quick_quiz = create_quiz.Game("Quick Quiz", 1, 8, [9], "easy")
+            quick_quiz = Game("Quick Quiz", 1, 8, [9], "easy")
             print(quick_quiz.__dict__)
 
             # Play the Quiz Game
-            play_quiz.play_terminal_quiz(quick_quiz)
+            play_terminal_quiz(quick_quiz)
 
             continue
 
@@ -107,19 +107,21 @@ def main():
             print("OK you want to make a custom Quiz!")
 
             # Prompts the user to set up their quiz
-            custom_quiz = create_quiz.setup_new_quiz()
+            custom_quiz = setup_new_quiz()
 
             # Play the Quiz the user just set up
-            play_quiz.play_terminal_quiz(custom_quiz)
+            play_terminal_quiz(custom_quiz)
 
             continue
         if response == 3:
             print("OK you want to make a Google For Quiz"
                   " to share with friends")
 
-            google_quiz = create_quiz.setup_new_quiz()
+            google_quiz = setup_new_quiz()
 
-            create_form.create_form_body(google_quiz)
+            print(google_quiz)
+
+            create_google_form(google_quiz)
 
             break
         if response == 4:
