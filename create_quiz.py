@@ -64,8 +64,8 @@ class Game:
         cats_text = [QUIZ_CATEGORIES[cat] for cat in self.categories]
 
         print(f"Quiz title: {self.quiz_title}\n{self.num_rounds}"
-              f" rounds of {self.num_questions} {self.difficulty} questions. \n"
-              f"\nCategories are:\n")
+              f" rounds of {self.num_questions} {self.difficulty} questions.\n"
+              f"\n Categories are:\n")
         print(*cats_text, sep=", ")
 
 
@@ -133,13 +133,15 @@ def setup_new_quiz():
             try:
                 rounds = int(input("How many rounds should the quiz have? \n"))
             except ValueError:
-                cprint("You must enter a number of rounds for the quiz.\n", "red")
+                cprint("You must enter a number of rounds for the quiz.\n",
+                       "red")
                 continue
             if rounds < 0:
                 cprint("Sorry, you must enter a positive number.\n", "red")
                 continue
             if rounds > 10:
-                cprint("Sorry, you can only have a maximum of 10 rounds.", "red")
+                cprint("Sorry, you can only have a maximum of 10 rounds.",
+                       "red")
                 continue
             else:
                 break
