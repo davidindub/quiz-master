@@ -7,6 +7,7 @@ from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
 import create_quiz
 import play_quiz
+import create_form
 
 now = datetime.now()
 current_hour = int(now.strftime("%H"))
@@ -116,6 +117,8 @@ def main():
             print("OK you want to make a Google For Quiz to share with friends")
 
             google_quiz = create_quiz.setup_new_quiz()
+
+            create_form.create_google_form(google_quiz)
 
             break
         if response == 4:
