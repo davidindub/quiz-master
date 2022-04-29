@@ -123,8 +123,7 @@ def create_google_form(game_obj):
         email = input("E-mail Address: \n").lower()
 
         # Quit to main menu if user types Q or quit
-        if email in ["quit", "q"]:
-            ask_form_owner = False
+        if is_quit(email):
             break
 
         # Try validate the email address, if valid share Google Form
@@ -132,7 +131,7 @@ def create_google_form(game_obj):
             email = validate_email(email).email
 
             ask_form_owner = False
-            insert_permission(DRIVE_SERVICE, QUIZ_FORM_ID, email, "user", "writer")
+            insert_permission(DRIVE_SERVICE, QUIZ_FORM_ID, email, "writer")
             cprint("📨 An e-mail is on the way! Happy Quizzing!")
 
             break

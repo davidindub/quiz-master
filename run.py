@@ -128,7 +128,7 @@ def main():
 
             create_google_form(google_quiz)
 
-            break
+            continue
         if response == 4:
             clear()
             tprint("HELP", font="o8")

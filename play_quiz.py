@@ -64,7 +64,7 @@ def play_terminal_quiz(game_obj):
                     print("Please enter an answer 1, 2, 3 or 4")
                     continue
                 else:
-                    print("❌ Wrong! ❌")
+                    print("\n ❌ Wrong! ❌ \n")
                     break
 
         total_score += round_score

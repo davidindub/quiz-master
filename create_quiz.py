@@ -1,9 +1,9 @@
 from helpers import ask_any_key, ask_yes_no, clear, is_quit
 import requests
 import json
-import html
 import random
 import sys
+import html
 from termcolor import colored, cprint
 from pprint import pprint
 from time import sleep
@@ -173,7 +173,7 @@ def setup_new_quiz():
             clear()
             cprint("Sorry, you must enter a positive number\n", "red")
             continue
-        if q_num > 5:
+        if q_num > 10:
             cprint("Sorry, you can only have a max of 10"
                    "questions per round.", "red")
             continue

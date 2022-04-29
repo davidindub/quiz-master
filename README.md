@@ -2,7 +2,7 @@
 # QuizMaster
 
 
-[Link to Live Site](https://www.)
+[Link to Live Site](https://quiz-master-2022.herokuapp.com/)
 
 
 ## Introduction
@@ -43,6 +43,52 @@ As a user, I want to be able to create a custom quiz to share and play with my f
 
 __Game Area__
 
+```python
+class Game:
+    def __init__(self, quiz_title, num_rounds, num_qs, categories, difficulty):
+        self.quiz_title = quiz_title
+        self.num_rounds = num_rounds
+        self.num_questions = num_qs
+        self.categories = categories
+        self.difficulty = difficulty
+
+        self.rounds = [Round(x+1, self.num_questions, self.categories[x],
+                             self.difficulty) for x in range(self.num_rounds)]
+
+```
+
+```python
+class Round:
+
+    def __init__(self, round_num, num_qs, category, difficulty):
+
+        self.round_num = round_num
+        self.num_qs = num_qs
+        self.category = category
+        self.difficulty = difficulty
+
+        self.question_data = get_quiz_questions(num_qs, category, difficulty)
+
+        self.questions_list = [Question(**question)
+                               for question in self.question_data]
+```
+
+```python
+class Question:
+
+    def __init__(
+        self, category, type, difficulty, question,
+            correct_answer, incorrect_answers):
+
+        self.category = category
+        self.qtype = type
+        self.difficulty = difficulty
+        self.question = question
+        self.correct_answer = correct_answer
+        self.incorrect_answers = incorrect_answers
+
+```
+
 ***
 
 __Accessibility__
@@ -70,16 +116,27 @@ __Favicon__
 - [Concepts](https://concepts.app/en/) for sketching on an iPad.
 - [Lucid Chart](https://lucid.app/) for making flow charts.
 
+## Python Packages Used
+
+- [termcolor](https://pypi.org/project/termcolor/) for colored terminal text.
+- [art](https://github.com/sepandhaghighi/art) - ASCII art library for ASCII text.
+- [google-auth](https://pypi.org/project/google-auth/) & [google.oauth2](https://google-auth.readthedocs.io/en/stable/reference/google.oauth2.html) for authenticating with Google APIs.
+- [email-validator](https://pypi.org/project/email-validator/) for validating the user's e-mail address if they want the Google Form Quiz shared with their Google Account.
+
+
 ## Testing 
 
+<!-- !!!!!! -->
 
 ## Deployment
 
 Due to a recent [security breach](https://status.heroku.com/incidents/2413) of Heroku OAuth Tokens, GitHub actions deployment to Heroku was disabled.
 
+<!-- procfile required - in template -->
+
 I instead deployed to Heroku using the Heroku CLI with the following steps
     - Create a new App in the Heroku web dashboard named 'quiz-master-2022'
-    - In the Heroku Dashboard Settings, under Config Vars - add the contents of the `client_secrets.json` file which wasn't pushed to a variable called `credentials`
+    - In the Heroku Dashboard Settings, under Config Vars - add the contents of the `creds.json` file which wasn't pushed to a variable called `CREDS`
     - Under Buildpacks, add Python and Nodejs and click save.
     - run `heroku login -i` in the command line directory of the project
     - Enter my Heroku account login details
@@ -90,6 +147,8 @@ I instead deployed to Heroku using the Heroku CLI with the following steps
 In order to make a local copy of this project, you can clone it. In your IDE Terminal, type the following command to clone my repository:
 
 - `git clone https://github.com/davidindub/quiz-master.git`
+
+<!-- CREATE OWN CLIENT_SECRETS ETC…………… & INSTALL PACKAGES INSTRUCTIONS pip3 install -r requirements.txt -->
 
 Alternatively, if using Gitpod, you can click below to create your own workspace using this repository.
 
@@ -102,7 +161,6 @@ Alternatively, if using Gitpod, you can click below to create your own workspace
 
 - [Open Trivia Database](https://opentdb.com/) for the quiz questions.
 - The code for the custom greeting based on the time of day I originally wrote for another application, [Coffee Calculator](https://github.com/davidindub/coffee-calculator/blob/main/greeting.py)
-- [art - ASCII art library for Python](https://github.com/sepandhaghighi/art) for ASCII art.
 - [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) documentation for their quickstart guides on using the APIs.
 
 
