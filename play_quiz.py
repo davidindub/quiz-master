@@ -1,8 +1,9 @@
 import random
 from time import sleep
 from art import tprint
-from helpers import clear, ask_any_key
+from helpers import clear, ask_any_key, is_quit
 from create_quiz import QUIZ_CATEGORIES
+
 
 def play_terminal_quiz(game_obj):
     """
@@ -19,19 +20,22 @@ def play_terminal_quiz(game_obj):
     for round in GAME.rounds:
         round_score = 0
 
-        print(f"Round {round.round_num}: {QUIZ_CATEGORIES[round.category]}")
-        sleep(1)
+        clear()
+        print(
+            f"Round {round.round_num}: {QUIZ_CATEGORIES[round.category]}")
+        sleep(2)
 
         for question in round.questions_list:
 
             all_answers = (question.incorrect_answers +
-                           [question.correct_answer])
+                            [question.correct_answer])
 
             # Shuffle the Answers
             random.shuffle(all_answers)
 
-            # Check the index of the correct answer, add 1 to match user input
-            expected_answer = (all_answers.index(question.correct_answer)) + 1
+            # Check the index of the correct answer, add 1 to match input
+            expected_answer = (all_answers.index(
+                question.correct_answer)) + 1
 
             while True:
                 try:
@@ -42,7 +46,13 @@ def play_terminal_quiz(game_obj):
                     for x in range(len(all_answers)):
                         print(f"({x+1}) {all_answers[x]}")
 
-                    answer = int(input("\n Answer: \n"))
+                    answer = input("\n Answer: \n")
+
+                    if is_quit(answer):
+                        return
+
+                    answer = int(answer)
+
                 except ValueError:
                     print("Please enter an answer 1, 2, 3 or 4")
                     continue
@@ -60,7 +70,7 @@ def play_terminal_quiz(game_obj):
         total_score += round_score
         print(f"Round {round.round_num} over!")
         print(f"You got {round_score} / {round.num_qs} correct "
-              f"in Round {round.round_num}.")
+                f"in Round {round.round_num}.")
         sleep(2)
 
     clear()

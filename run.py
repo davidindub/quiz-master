@@ -105,18 +105,19 @@ def main():
             quick_quiz = Game("Quick Quiz", 1, 8, [9], "easy")
 
             # Play the Quiz Game
-            play_terminal_quiz(quick_quiz)
+            while True:
+                play_terminal_quiz(quick_quiz)
+                break
 
-            # continue
+            continue
 
         if response == 2:
-            print("OK you want to make a custom Quiz!")
-
             # Prompts the user to set up their quiz
             custom_quiz = setup_new_quiz()
 
             # Play the Quiz the user just set up
-            play_terminal_quiz(custom_quiz)
+            if custom_quiz:
+                play_terminal_quiz(custom_quiz)
 
             continue
         if response == 3:
@@ -124,8 +125,6 @@ def main():
                   " to share with friends")
 
             google_quiz = setup_new_quiz()
-
-            print(google_quiz)
 
             create_google_form(google_quiz)
 

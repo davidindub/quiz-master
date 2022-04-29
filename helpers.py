@@ -1,4 +1,5 @@
 from os import system, name
+from time import sleep
 
 
 def ask_yes_no(question):
@@ -24,7 +25,22 @@ def ask_yes_no(question):
             continue
 
 
+def is_quit(response):
+    """
+    Checks if the user's response
+    was to quit the game
+    """
+    if response.lower() in ["q", "quit"]:
+        print("Quiting Game!")
+        return True
+    else:
+        return False
+
+
 def ask_any_key():
+    """
+    Ask the user to press any key to return to main menu
+    """
     input("Press any key to return to Main Menu.")
     return
 
