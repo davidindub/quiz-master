@@ -5,14 +5,15 @@ from apiclient import discovery, errors
 import json
 from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear
-from create_form import CREDS
+
+CREDS = service_account.Credentials.from_service_account_file('creds.json')
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(
     ['https://www.googleapis.com/auth/drive'])
 
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-service = discovery.build('drive', 'v3', credentials=SCOPED_CREDENTIALS)
+DRIVE_SERVICE = discovery.build('drive', 'v3', credentials=SCOPED_CREDENTIALS)
 
 
 def delete_file(file_id):
@@ -22,7 +23,7 @@ def delete_file(file_id):
       file_id: ID of the file to delete.
     """
     try:
-        service.files().delete(fileId=file_id).execute()
+        DRIVE_SERVICE.files().delete(fileId=file_id).execute()
         print(f"📁🗑 File deleted: {file_id}")
     except errors.HttpError as error:
         print(f"🚫 An error occurred: {error}")
@@ -34,7 +35,7 @@ def list_all_files():
     """
     try:
         # Call the Drive v3 API
-        results = service.files().list(
+        results = DRIVE_SERVICE.files().list(
             pageSize=100, fields="nextPageToken, files(id, name)").execute()
         items = results.get("files", [])
 
@@ -54,7 +55,7 @@ def delete_all_files():
     Deletes all files in Google Drive!
     """
     try:
-        results = service.files().list(
+        results = DRIVE_SERVICE.files().list(
             pageSize=100, fields="nextPageToken, files(id, name)").execute()
         items = results.get("files", [])
 
@@ -70,7 +71,7 @@ def delete_all_files():
         print(f"🚫 An error occurred: {error}")
 
 
-def insert_permission(service, file_id, value, perm_type, role):
+def insert_permission(DRIVE_SERVICE, file_id, value, perm_type, role):
     """Insert a new permission.
     Args:
       service: Drive API service instance.
@@ -88,7 +89,7 @@ def insert_permission(service, file_id, value, perm_type, role):
         'role': role
     }
     try:
-        return service.permissions().insert(
+        return DRIVE_SERVICE.permissions().insert(
             fileId=file_id, body=new_permission).execute()
     except errors.HttpError as error:
         print(f"An error occurred: {error}")

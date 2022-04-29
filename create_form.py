@@ -5,6 +5,7 @@ import json
 from email_validator import validate_email, EmailNotValidError
 from helpers import ask_yes_no
 from termcolor import colored, cprint
+from gdrive_utility import insert_permission, DRIVE_SERVICE
 from create_gform_items import (
     create_gform_question, create_gform_round,
     create_gform_text_question, create_gform_game)
@@ -18,7 +19,7 @@ SCOPED_CREDENTIALS = CREDS.with_scopes(
 
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-form_service = discovery.build('forms', 'v1', credentials=SCOPED_CREDENTIALS,
+FORM_SERVICE = discovery.build('forms', 'v1', credentials=SCOPED_CREDENTIALS,
                                discoveryServiceUrl=DISCOVERY_DOC,
                                static_discovery=False)
 
@@ -32,7 +33,7 @@ form = {
 }
 
 # Creates the initial form
-QUIZ_FORM = form_service.forms().create(body=form).execute()
+QUIZ_FORM = FORM_SERVICE.forms().create(body=form).execute()
 QUIZ_FORM_ID = QUIZ_FORM["formId"]
 QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
 
@@ -86,7 +87,7 @@ def add_item_to_gform(item):
             item
         ]
     }
-    form_service.forms().batchUpdate(
+    FORM_SERVICE.forms().batchUpdate(
         formId=QUIZ_FORM_ID, body=body_text).execute()
 
 
@@ -96,7 +97,7 @@ def create_google_form(game_obj):
 
     update = create_form_body(game_obj)
 
-    question_setting = form_service.forms().batchUpdate(
+    question_setting = FORM_SERVICE.forms().batchUpdate(
         formId=QUIZ_FORM_ID, body=update).execute()
 
     team_name_q = create_gform_text_question("Team Name")
@@ -104,7 +105,7 @@ def create_google_form(game_obj):
     add_item_to_gform(team_name_q)
 
     # Print the result to see it's now a quiz
-    getresult = form_service.forms().get(formId=QUIZ_FORM["formId"]).execute()
+    getresult = FORM_SERVICE.forms().get(formId=QUIZ_FORM["formId"]).execute()
 
     print(f"Form ID: {QUIZ_FORM_ID}")
     cprint(f"Your Google Form Quiz is ready to share: \n", "green")
@@ -130,8 +131,10 @@ def create_google_form(game_obj):
         try:
             email = validate_email(email).email
 
-            cprint("📨 An e-mail is on the way! Happy Quizzing!")
             ask_form_owner = False
+            insert_permission(DRIVE_SERVICE, QUIZ_FORM_ID, email, "user", "writer")
+            cprint("📨 An e-mail is on the way! Happy Quizzing!")
+
             break
 
         except EmailNotValidError as e:
