@@ -71,29 +71,27 @@ def delete_all_files():
         print(f"🚫 An error occurred: {error}")
 
 
-def insert_permission(DRIVE_SERVICE, file_id, value, perm_type, role):
-    """Insert a new permission.
+def insert_permission(service, file_id, value, role):
+    """
+    Insert a new permission.
     Args:
-      service: Drive API service instance.
-      file_id: ID of the file to insert permission for.
-      value: User or group e-mail address, domain name or None for 'default'
-             type.
-      perm_type: The value 'user', 'group', 'domain' or 'default'.
-      role: The value 'owner', 'writer' or 'reader'.
-    Returns:
-      The inserted permission if successful, None otherwise.
+        service: Drive API service instance.
+        file_id: ID of the file to insert permission for.
+        value:
+        User or group e-mail address, domain name or None for 'default' type.
+        role: The value 'owner', 'writer' or 'reader'.
     """
     new_permission = {
-        'value': value,
-        'type': perm_type,
-        'role': role
+        "emailAddress": value,
+        "role": role,
+        "type": "user"
     }
     try:
-        return DRIVE_SERVICE.permissions().insert(
+        return service.permissions().create(
             fileId=file_id, body=new_permission).execute()
     except errors.HttpError as error:
         print(f"An error occurred: {error}")
-    return None
+        return
 
 
 def run():
