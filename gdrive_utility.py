@@ -4,7 +4,7 @@ from googleapiclient.errors import HttpError
 from apiclient import discovery, errors
 import json
 from termcolor import colored, cprint
-from helpers import ask_any_key, ask_yes_no, clear
+from helpers import ask_any_key, ask_yes_no, clear, is_quit
 
 CREDS = service_account.Credentials.from_service_account_file('creds.json')
 
@@ -109,6 +109,9 @@ def run():
 
             for option in menu_options:
                 print(option)
+
+            if is_quit(response):
+                return
 
             response = int(input("What would you like to do?\n"))
 

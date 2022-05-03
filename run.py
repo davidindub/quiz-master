@@ -54,23 +54,27 @@ def main():
     With Quiz Master 2022, you can create and play multiple choice quiz games
     either to play here in the terminal, or export as a Google Form that
     you can send to your friends - perfect for running an online table quiz!
-    \n \n
+
+
     (1) Quick Quiz Round \n
     Play a short Quiz of 5 General Knowledge Questions here in the terminal.
 
     Chose an answer with the keys 1, 2, 3 or 4 and hit Enter.
     """,
                  """
-    (2) Create Custom Quiz \n
+    (2) Create Custom Quiz
+
     Choose custom settings such as categories, number of questions and
     difficulty and play here in the terminal.
-    \n \n
-    (3) Create a Google Form Quiz \n
+
+    (3) Create a Google Form Quiz
+
     Choose custom settings, and then export your Quiz to a Google Form
     you can share with your friends.
     You can input your e-mail address and see the results as your friends
     submit their answers!
-    \n \n
+
+
     See this project on GitHub at https://github.com/davidindub/quiz-master
     Quiz Master 2022 © David Kelly.
     """]
@@ -87,7 +91,7 @@ def main():
 
         # Main Menu:
         print("Main Menu")
-        print("\n##########################\n")
+        print("_________\n")
 
         try:
             print("Please choose from the following:\n")
@@ -95,7 +99,8 @@ def main():
             for option in menu_options:
                 print(option)
 
-            response = int(input("\nPress Enter to confirm your selection \n"))
+            response = int(
+                input("\nPress Enter to confirm your selection. \n"))
         except ValueError:
             clear()
             continue
@@ -139,16 +144,17 @@ def main():
             ask_any_key()
             continue
         if response == 999:
-            cprint("Google Drive Utility Login", "blue")
-            x = input("What is the password??")
+            cprint("\nGoogle Drive Utility Login", "blue")
+            x = input("What is the password?\n")
 
             if x == SECRET:
-                print("✅ Correct! Loading Google Drive Management....\n")
+                cprint("✅ Correct! Loading Google Drive Management...\n",
+                       "green")
                 sleep(1)
                 clear()
                 gdrive_utility.run()
             else:
-                cprint("Nope!", "red")
+                cprint("❌ Incorrect Password", "red")
                 continue
 
         if response not in [1, 2, 3, 4, 999] or input == "":

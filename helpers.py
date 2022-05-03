@@ -28,11 +28,15 @@ def ask_yes_no(question):
 def is_quit(response):
     """
     Checks if the user's response
-    was to quit the game
+    was to quit the game, if so ask to confirm.
+    Returns True if user wants to quit,
+    otherwise returns False.
     """
     if response.lower() in ["q", "quit"]:
-        print("Quiting Game!")
-        return True
+        if ask_yes_no("Would you like to return to the Main Menu?"):
+            return True
+        else:
+            return False
     else:
         return False
 
