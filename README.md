@@ -86,12 +86,24 @@ class Question:
         self.question = question
         self.correct_answer = correct_answer
         self.incorrect_answers = incorrect_answers
-
 ```
 
 ***
 
-__Accessibility__
+__Google Drive Utility Menu__
+
+- When building the project, I needed a way to use the Google Drive API to manage the forms created. I build a simple file management tool, and implemented it as a secret menu option from the Main Menu.
+
+- To access the Google Drive Utility, you enter 999 on the Main Menu and are then prompted for a password.
+
+- I implemented the administrator password similar to the API keys, storing it in a variable in `creds.json` file which wasn't pushed to Heroku. In the Heroku project settings I stored it as a Config Var, ensuring it is never publically exposed.
+
+- As the Utility is only available to an administrator, I have included screenshots below.
+
+
+![Screenshot showing the password prompt for the Google Drive Utility](documentation/images/screenshot-gdrive-1.png)
+![Screenshot showing the menu for the Google Drive Utility with 3 options - List All Files, Delete File by ID, Delete all Files](documentation/images/screenshot-gdrive-2.png)
+![Screenshot showing the the Google Drive Utility listing all the created Forms and their IDs](documentation/images/screenshot-gdrive-3.png)
 
 ***
 
