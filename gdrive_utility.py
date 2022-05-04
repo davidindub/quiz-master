@@ -24,7 +24,7 @@ def delete_file(file_id):
     """
     try:
         DRIVE_SERVICE.files().delete(fileId=file_id).execute()
-        print(f"📁🗑 File deleted: {file_id}")
+        print(f"📁➡🗑 File deleted: {file_id}")
     except errors.HttpError as error:
         print(f"🚫 An error occurred: {error}")
 
@@ -42,10 +42,9 @@ def list_all_files():
         if not items:
             cprint("No files found.", "red")
         else:
-            print("🗂 Files:")
+            print("🗄 Files:")
             for item in items:
-                print(u"{0} ({1})".format(item["name"], item["id"]))
-                # delete_file(item["id"])
+                print(f"📁 {item['name']} ({item['id']})")
     except HttpError as error:
         print(f"🚫 An error occurred: {error}")
 
@@ -115,7 +114,7 @@ def run():
             if is_quit(response):
                 break
             
-            int(response)
+            response = int(response)
 
         except ValueError:
             continue
@@ -128,6 +127,7 @@ def run():
             print("Permanently delete a file. You cannot undo this!")
             file_id = input("File ID to be deleted: \n")
             delete_file(file_id)
+            continue
         if response == 3:
             cprint("❌ WARNING ❌", "red")
             print("This will instantly deleted all files permanently!")

@@ -3,7 +3,7 @@ from google.auth.transport.requests import AuthorizedSession
 from apiclient import discovery
 import json
 from email_validator import validate_email, EmailNotValidError
-from helpers import ask_yes_no
+from helpers import ask_yes_no, is_quit
 from termcolor import colored, cprint
 from gdrive_utility import insert_permission, DRIVE_SERVICE
 from create_gform_items import (
@@ -28,7 +28,7 @@ FORM_SERVICE = discovery.build('forms', 'v1', credentials=SCOPED_CREDENTIALS,
 # Boilerplate code for initial form setup
 form = {
     "info": {
-        "title": "My New Quiz",
+        "title": "My New Quiz"
     }
 }
 
@@ -39,7 +39,7 @@ QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
 
 
 # Convert the form into a quiz & create and add all the questions
-def create_form_body(game_obj):
+def create_gform_body(game_obj):
     """
     Returns the request body to send to the Google Forms
     API for a new Quiz Game
@@ -78,9 +78,13 @@ def create_form_body(game_obj):
     return body
 
 
-def add_item_to_gform(item):
+def add_item_to_gform(item, form_id):
     """
     Adds a Question to Google Form
+
+    Args:
+    item: Item to add to the Google Form
+    form_id: The ID of the form to add the item to
     """
     body_text = {
         "requests": [
@@ -88,21 +92,21 @@ def add_item_to_gform(item):
         ]
     }
     FORM_SERVICE.forms().batchUpdate(
-        formId=QUIZ_FORM_ID, body=body_text).execute()
+        formId=form_id, body=body_text).execute()
 
 
 # Updates the form
 
 def create_google_form(game_obj):
 
-    update = create_form_body(game_obj)
+    update = create_gform_body(game_obj)
 
     question_setting = FORM_SERVICE.forms().batchUpdate(
         formId=QUIZ_FORM_ID, body=update).execute()
 
     team_name_q = create_gform_text_question("Team Name")
 
-    add_item_to_gform(team_name_q)
+    add_item_to_gform(team_name_q, QUIZ_FORM_ID)
 
     # Print the result to see it's now a quiz
     getresult = FORM_SERVICE.forms().get(formId=QUIZ_FORM["formId"]).execute()
