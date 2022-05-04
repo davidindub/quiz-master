@@ -84,3 +84,4 @@ def play_terminal_quiz(game_obj):
     sleep(1)
 
     ask_any_key()
+    return

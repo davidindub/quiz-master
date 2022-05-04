@@ -144,6 +144,7 @@ def main():
             ask_any_key()
             continue
         if response == 999:
+            clear()
             cprint("\nGoogle Drive Utility Login", "blue")
             x = input("What is the password?\n")
 
