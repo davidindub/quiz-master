@@ -110,10 +110,12 @@ def run():
             for option in menu_options:
                 print(option)
 
+            response = input("What would you like to do?\n")
+
             if is_quit(response):
                 return
-
-            response = int(input("What would you like to do?\n"))
+            
+            int(reponse)
 
         except ValueError:
             continue
