@@ -154,6 +154,7 @@ def main():
                 sleep(1)
                 clear()
                 gdrive_utility.run()
+                continue
             else:
                 cprint("❌ Incorrect Password", "red")
                 continue

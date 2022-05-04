@@ -113,9 +113,9 @@ def run():
             response = input("What would you like to do?\n")
 
             if is_quit(response):
-                return
+                break
             
-            int(reponse)
+            int(response)
 
         except ValueError:
             continue
