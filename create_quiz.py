@@ -4,6 +4,7 @@ import json
 import random
 import sys
 import html
+import urllib.parse
 from termcolor import colored, cprint
 from pprint import pprint
 from time import sleep
@@ -40,7 +41,7 @@ def get_quiz_questions(num_qs, cat, diff):
     """
 
     return json.loads(requests.get(
-        f"https://opentdb.com/api.php?amount={num_qs}&category={cat}&difficulty={diff}&type=multiple&token={SESSION_TOKEN}").text)["results"]  # noqa
+        f"https://opentdb.com/api.php?amount={num_qs}&category={cat}&difficulty={diff}&type=multiple&token={SESSION_TOKEN}&encode=url3986").text)["results"]  # noqa
 
 
 class Game:
@@ -49,6 +50,13 @@ class Game:
     Expects 5 parameters: Quiz Title, Number of Rounds,
     Number of Questions in a round, a list of the categories
     for each round, and the difficulty
+    Args:
+        quiz_title: string Title for the Quiz
+        num_rounds: int Number of rounds
+        num_qs: int Number of questions per round
+        categories: A list of ints coresponding to the
+                    Quiz API's IDs of the categories chosen
+        difficulty: string "easy", "medium", or "hard"
     """
 
     def __init__(self, quiz_title, num_rounds, num_qs, categories, difficulty):
@@ -60,6 +68,21 @@ class Game:
 
         self.rounds = [Round(x+1, self.num_questions, self.categories[x],
                              self.difficulty) for x in range(self.num_rounds)]
+
+    def get_quiz_title(self):
+        return self.quiz_title
+
+    def get_num_rounds(self):
+        return self.num_rounds
+
+    def get_num_questions(self):
+        return self.num_questions
+
+    def get_categories(self):
+        return self.categories
+
+    def get_rounds(self):
+        return self.rounds
 
     def describe(self):
         cats_text = [QUIZ_CATEGORIES[cat] for cat in self.categories]
@@ -73,8 +96,11 @@ class Game:
 class Round:
     """
     Generates a Quiz Round
-    Expects four parameters: Round Number, Num of Questions,
-    Category, and Difficulty
+    Args:
+        round_num: int Order of the round in the game
+        num_qs: int Number of questions in round
+        category: int the ID of the category
+        difficulty: string "easy", "medium" or "hard"
     """
 
     def __init__(self, round_num, num_qs, category, difficulty):
@@ -84,15 +110,38 @@ class Round:
         self.category = category
         self.difficulty = difficulty
 
-        self.question_data = get_quiz_questions(num_qs, category, difficulty)
+        question_data = get_quiz_questions(num_qs, category, difficulty)
 
         self.questions_list = [Question(**question)
-                               for question in self.question_data]
+                               for question in question_data]
+
+    def get_round_num(self):
+        return self.round_num
+
+    def get_num_qs(self):
+        return self.num_qs
+
+    def get_category(self):
+        return self.category
+
+    def get_difficulty(self):
+        return self.difficulty
+
+    def get_questions(self):
+        return self.questions_list
 
 
 class Question:
     """
     Creates a Quiz Question instance
+
+    Args:
+        category: int, the ID of the category
+        q_type: "multiple" or "boolean"
+        difficulty: "easy", "medium" or "hard"
+        question: string containing the question
+        correct_answer: string containing the correct answer
+        incorrect_answers: list of strings of incorrect answers
     """
 
     def __init__(
@@ -102,9 +151,28 @@ class Question:
         self.category = category
         self.qtype = type
         self.difficulty = difficulty
-        self.question = html.unescape(question)
-        self.correct_answer = html.unescape(correct_answer)
-        self.incorrect_answers = html.unescape(incorrect_answers)
+        self.question = urllib.parse.unquote(question)
+        self.correct_answer = urllib.parse.unquote(correct_answer)
+        self.incorrect_answers = [urllib.parse.unquote(
+            ans) for ans in incorrect_answers]
+
+    def get_category(self):
+        return self.category
+
+    def get_qtype(self):
+        return self.qtype
+
+    def get_difficulty(self):
+        return self.difficulty
+
+    def get_question(self):
+        return self.question
+
+    def get_correct_answer(self):
+        return self.correct_answer
+
+    def get_incorrect_answers(self):
+        return self.incorrect_answers
 
 
 def setup_new_quiz():
@@ -117,10 +185,11 @@ def setup_new_quiz():
     while True:
         try:
             title = str(input("What is the name of your Quiz Game? \n"))
+
+            if is_quit(title):
+                return None
         except TypeError:
             continue
-        if is_quit(title):
-            return None
         if title == "":
             print("Please enter a name for the quiz. \n")
             continue
