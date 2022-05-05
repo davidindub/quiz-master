@@ -54,9 +54,9 @@ def clear():
     Clears the Terminal Window
     """
     # for Windows
-    if name == 'nt':
-        _ = system('cls')
+    if name == "nt":
+        _ = system("cls")
 
     # for macOS/Linux
     else:
-        _ = system('clear')
+        _ = system("clear")

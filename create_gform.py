@@ -12,14 +12,14 @@ from create_gform_items import (
 
 # https://google-auth.readthedocs.io/en/master/user-guide.html
 
-CREDS = service_account.Credentials.from_service_account_file('creds.json')
+CREDS = service_account.Credentials.from_service_account_file("creds.json")
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(
-    ['https://www.googleapis.com/auth/forms.body'])
+    ["https://www.googleapis.com/auth/forms.body"])
 
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-FORM_SERVICE = discovery.build('forms', 'v1', credentials=SCOPED_CREDENTIALS,
+FORM_SERVICE = discovery.build("forms", "v1", credentials=SCOPED_CREDENTIALS,
                                discoveryServiceUrl=DISCOVERY_DOC,
                                static_discovery=False)
 
@@ -98,6 +98,12 @@ def add_item_to_gform(item, form_id):
 # Updates the form
 
 def create_google_form(game_obj):
+    """
+    Create a new Google Form using a Quiz Game Object
+
+    Args:
+    game_obj: A Quiz Game Object
+    """
 
     update = create_gform_body(game_obj)
 

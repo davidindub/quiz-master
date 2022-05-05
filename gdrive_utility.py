@@ -6,14 +6,14 @@ import json
 from termcolor import colored, cprint
 from helpers import ask_any_key, ask_yes_no, clear, is_quit
 
-CREDS = service_account.Credentials.from_service_account_file('creds.json')
+CREDS = service_account.Credentials.from_service_account_file("creds.json")
 
 SCOPED_CREDENTIALS = CREDS.with_scopes(
-    ['https://www.googleapis.com/auth/drive'])
+    ["https://www.googleapis.com/auth/drive"])
 
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
-DRIVE_SERVICE = discovery.build('drive', 'v3', credentials=SCOPED_CREDENTIALS)
+DRIVE_SERVICE = discovery.build("drive", "v3", credentials=SCOPED_CREDENTIALS)
 
 
 def delete_file(file_id):
@@ -75,10 +75,10 @@ def insert_permission(service, file_id, value, role):
     Insert a new permission.
     Args:
         service: Drive API service instance.
-        file_id: ID of the file to insert permission for.
+        file_id: int ID of the file to insert permission for.
         value:
-        User or group e-mail address, domain name or None for 'default' type.
-        role: The value 'owner', 'writer' or 'reader'.
+        string User or group e-mail address, domain name or None for "default" type.
+        role: The value "owner", "writer" or "reader".
     """
     new_permission = {
         "emailAddress": value,

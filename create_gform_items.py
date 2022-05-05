@@ -14,7 +14,7 @@ def create_gform_question(question_obj):
     return {
         "createItem": {
             "item": {
-                "title": question_obj["question"],
+                "title": question_obj.get_question(),
                 "questionItem": {
                     "question": {
                         "required": True,
@@ -22,20 +22,20 @@ def create_gform_question(question_obj):
                             "pointValue": 1,
                             "correctAnswers": {
                                 "answers":
-                                [{"value": question_obj["correct_answer"]}]
+                                [{"value": question_obj.get_correct_answer()}]
                             },
                         },
                         "choiceQuestion": {
                             "type": "RADIO",
                             "options": [
                                     {"value":
-                                     question_obj["correct_answer"]},
+                                     question_obj.get_correct_answer()},
                                     {"value":
-                                     question_obj["incorrect_answers"][0]},
+                                     question_obj.get_incorrect_answers()[0]},
                                     {"value":
-                                     question_obj["incorrect_answers"][1]},
+                                     question_obj.get_incorrect_answers()[1]},
                                     {"value":
-                                     question_obj["incorrect_answers"][2]}
+                                     question_obj.get_incorrect_answers()[2]}
                             ],
                             "shuffle": True
                         }
@@ -55,8 +55,9 @@ def create_gform_text_question(question_to_ask):
     text field input for response
 
     Args:
-    question_to_ask: The Question to ask
+        question_to_ask: The Question to ask
     """
+
     return {
         "createItem": {
             "item": {
@@ -82,8 +83,8 @@ def create_gform_page_break(round_num, category):
     Creates a page break for a Google Form
 
     Args:
-    round_num: The number of the round
-    category: The index of the category of the round
+        round_num: The number of the round
+        category: The index of the category of the round
     """
     page_break = {
         "createItem": {
@@ -103,22 +104,25 @@ def create_gform_page_break(round_num, category):
 def create_gform_round(round_obj):
     """
     Takes a game round python object and returns a list
-    of 'createItem' objects to send to the Google Forms
+    of "createItem" objects to send to the Google Forms
     API
 
     Args:
         round_obj: A Round object
     """
-    round_obj = round_obj.__dict__
 
-    nums_qs = round_obj["num_qs"]
-    round_num = round_obj["round_num"]
-    category = round_obj["category"]
-    questions = round_obj["question_data"]
+    nums_qs = round_obj.get_num_qs()
+    round_num = round_obj.get_round_num()
+    category = round_obj.get_category()
+    questions = round_obj.get_questions()
     form_items = []
 
     for question in questions:
         form_items.insert(0, create_gform_question(question))
+
+        f = open("test.txt", "a")
+        f.write(question.get_question() + "\n")
+        f.close()
 
     form_items.append(create_gform_page_break(round_num, category))
 
@@ -128,7 +132,7 @@ def create_gform_round(round_obj):
 def create_gform_game(game_obj):
     """
     Takes a quiz game python object and returns a list
-    of 'createItem' objects to send to the Google Forms
+    of "createItem" objects to send to the Google Forms
     API
 
     Args:
@@ -142,4 +146,3 @@ def create_gform_game(game_obj):
         form_items.insert(0, create_gform_round(round))
 
     return form_items
-
