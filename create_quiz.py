@@ -18,9 +18,12 @@ def create_categories_dict(categories_data):
     Creates a dictionary of quiz
     categories in the format id: category
     """
+    # Choose how many categories to display.
+    NUM_OF_CATS_TO_DISPLAY = 17
+
     cats_dict = {}
 
-    for x in range(len(categories_data)):
+    for x in range(NUM_OF_CATS_TO_DISPLAY):
         key, value = categories_data[x].values()
         cats_dict[key] = value
 
