@@ -53,6 +53,8 @@ I chose Courier New (or other monospace font as fallback) to match the text of t
 
 ### Wireframes
 
+I altered the Code Institute Python Terminal template to provide a new colour scheme, center the terminal and add a link to the GitHub repository.
+
 ![](documentation/images/wireframe-deploy.png)
 
 
@@ -110,10 +112,13 @@ This screen provides further information on using the application, with a detail
 
 __Game Area__
 
-I wanted to write `create_quiz.py` to make it as reusable as possible, so it could easily be used in other Quiz projects. I took the data returned from the Open Trivia Database, and created Python objects using classes.
+I wanted to write `create_quiz.py` to make it as reusable as possible, so it could easily be used in other Quiz projects.
 
-A Game Object contains 1 or more Round objects, which in turn contain 1 or more Question objects. 
+I took the data returned from the Open Trivia Database, and created Python objects using classes.
 
+A Game Object contains 1 or more Round objects, which in turn contain 1 or more Question objects.
+
+Each of the objects are constructed using an `__init__` method similar to below:
 
 ```python
 class Game:
@@ -129,37 +134,6 @@ class Game:
 
 ```
 
-```python
-class Round:
-
-    def __init__(self, round_num, num_qs, category, difficulty):
-
-        self.round_num = round_num
-        self.num_qs = num_qs
-        self.category = category
-        self.difficulty = difficulty
-
-        self.question_data = get_quiz_questions(num_qs, category, difficulty)
-
-        self.questions_list = [Question(**question)
-                               for question in self.question_data]
-```
-
-```python
-class Question:
-
-    def __init__(
-        self, category, type, difficulty, question,
-            correct_answer, incorrect_answers):
-
-        self.category = category
-        self.qtype = type
-        self.difficulty = difficulty
-        self.question = question
-        self.correct_answer = correct_answer
-        self.incorrect_answers = incorrect_answers
-```
-
 ***
 
 #### Google Drive Utility Menu
@@ -172,10 +146,14 @@ class Question:
 
 - As the Utility is only available to an administrator, I have included screenshots below.
 
+<details>
+<summary>Screenshots of Hidden Google Drive Utility</summary>
 
 ![Screenshot showing the password prompt for the Google Drive Utility](documentation/images/screenshot-gdrive-1.png)
 ![Screenshot showing the menu for the Google Drive Utility with 3 options - List All Files, Delete File by ID, Delete all Files](documentation/images/screenshot-gdrive-2.png)
 ![Screenshot showing the the Google Drive Utility listing all the created Forms and their IDs](documentation/images/screenshot-gdrive-3.png)
+
+</details>
 
 ***
 
@@ -210,14 +188,86 @@ class Question:
 
 I performed manual testing contiously as the application was being developed.
 
-I used the `pprint` package at some stages of development to more easily see objects I was printing to the terminal.
+I attempted many possible inputs that could distrupt the application. I used the package `email-validator` to validate the user's e-mail address should they want the Google Form shared with them. For instances where a "Y" or "N" was expected, I accepted "YES" or "NO" and lowercase versions of all.
+While Loops were used to ask the user for input until an accepted value was entered (or the user quit by entering "Q", "QUIT" or lowercase versions of either)
+
+I used the `pprint` package at some stages of development to more easily see objects I was printing to the terminal, but it wasn't used in the final application.
 
 I used test JSON quiz data stored in a variable to test the Google Forms creation functions as I was building them.
+
+<details>
+<summary>Screenshots with test data</summary>
+
+![](documentation/images/screenshot-test-data.png)
+
+</details>
+
+I initiated Game objects based on test data which was later removed, as well as relying on API calls.
+
 
 The [GitHub Issues](https://github.com/davidindub/quiz-master/issues) page of the repository was invaluble for tracking bugs found, and closing the issues when fixed.
 
 I deployed on Heroku early so I could see the final input as it differs to the terminal in my development environment.
 I had to limit the amount of text displayed at any time to prevent a scroll appearing, such as on the help screen and listing the available categories.
+
+As the categories list was too long for the deployed project's terminal, I created a variable `NUM_OF_CATS_TO_DISPLAY` and set it to 17 which limits the number displayed, hiding some of the more niche categories.
+
+
+### User Story Testing
+
+
+<details>
+<summary>As a first time user, I need instructions on how to use the applications so I can use it.</summary>
+
+1. At the Main Menu, I see the Help option, number 4.
+2. I input `4` to select it and press Enter, and a screen displays with a description of the application, and explanations of the other Main Menu Options.
+3. A Link to GitHub is also provided which takes me to this README.
+
+![](documentation/images/screenshot-help-screen.png)
+
+![](documentation/images/screenshot-help-screen-2.png)
+
+**Result:** Pass ✅
+</details>
+
+<details>
+<summary>As a user, I want to be able to play a quick quiz round without chosing any settings.</summary>
+
+
+**Result:** Pass ✅
+</details>
+
+<details>
+<summary>As a quiz enthusiast I want to be able to build custom quizzes based on different categories.</summary>
+
+1. At the Main Menu, I see the first option is 'Play Quick Quiz Round'
+2. I input `1` to select it and press Enter, and I am immediately playing a short quiz of 5 questions.
+3. At the end of the quiz my result is displayed, and I can press any key to return to the Main Menu.
+
+![](documentation/images/screenshot-quick-quiz.png)
+
+**Result:** Pass ✅
+</details>
+
+<details>
+<summary>As a user running a virtual quiz, I want to be able to create a custom quiz to share and play with my friends.</summary>
+
+1. At the Main Menu, I see the option to Create a Google Form Quiz.
+2. I input `3` to select it and press Enter, and I am taken to the Quiz setup.
+3. I am asked about the settings I want for my quiz; the quiz name, number of rounds, number of questions, categories, and difficulty of the questions.
+4. My settings are shown to me for confirmation, if I made a mistake or change my mind I can restart. I press `Y` to confirm.
+5. A URL to the Google Form is shared with me.
+6. I input my e-mail address and the form is shared with me by email. Now I can see the responses as they come in and run my virtual quiz.
+
+![](documentation/images/screenshot-quiz-setup.png)
+![](documentation/images/screenshot-quiz-share.png)
+![](documentation/images/screenshot-google-form.png)
+![](documentation/images/screenshot-google-form-responses.png)
+
+
+**Result:** Pass ✅
+</details>
+
 
 
 ### Challenges Faced
@@ -225,15 +275,77 @@ I had to limit the amount of text displayed at any time to prevent a scroll appe
 - The [Google Forms API](https://developers.google.com/forms) was only released in March 2022, the month before I started building the project. Unlike other products like Google Sheets, there was are no Python Packages released yet to simplify using the Forms API.
 - I had to build the project using just the documentation and there was a lack of any examples of the Forms API in use in a Python project yet.
 - I think there's great potential for a Google Forms API Package, and it's a project I would like to work on in future.
+
 - I faced difficulties with the encoding of the data from the API and escape characters appearing when I passed the data to Google Forms. I used `urllib.parse.urlparse` to parse the Quiz API data. Using square bracket notation to access the properties of the Quiz/Round/Game objects for the Google Form creation was introducing encoding errors, so I created methods on the objects that return the properies.
 
+<details>
+<summary>Screenshots with encoding issues</summary>
 
+![](documentation/images/screenshot-encoding-issue-1.png)
+![](documentation/images/screenshot-encoding-issue-2.png)
+![](documentation/images/screenshot-encoding-issue-3.png)
 
-### Validation
+</details>
+
+### Code Validation
+
+All the files pass PEP8 Validation.
 
 I used `# noqa` on line 44 of `create_quiz.py` ignore a line length warning on a long URL for an API call.
 
+
 http://pep8online.com/
+
+
+<details>
+<summary>PEP8 Online Validation - run.py</summary>
+
+![](documentation/images/validation/pep8-validation-run-py.png)
+
+</details>
+
+<details>
+<summary>PEP8 Online Validation - helpers.py</summary>
+
+![](documentation/images/validation/pep8-validation-helpers-py.png)
+
+</details>
+
+<details>
+<summary>PEP8 Online Validation - play-quiz.py</summary>
+
+![](documentation/images/validation/pep8-validation-play-quiz-py.png)
+
+</details>
+
+<details>
+<summary>PEP8 Online Validation - create-quiz.py</summary>
+
+![](documentation/images/validation/pep8-validation-create-quiz-py.png)
+
+</details>
+
+<details>
+<summary>PEP8 Online Validation - create-gform.py</summary>
+
+![](documentation/images/validation/pep8-validation-create-gform-py.png)
+
+</details>
+
+<details>
+<summary>PEP8 Online Validation - create-gform-items.py</summary>
+
+![](documentation/images/validation/pep8-validation-create-gform-items-py.png)
+
+</details>
+
+<details>
+<summary>PEP8 Online Validation - gdrive-utility.py</summary>
+
+![](documentation/images/validation/pep8-validation-gdrive-utility-py.png)
+
+</details>
+
 
 
 ***
