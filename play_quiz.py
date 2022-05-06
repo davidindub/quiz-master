@@ -14,40 +14,42 @@ def play_terminal_quiz(game_obj):
     game_obj: A Quiz game object
     """
     GAME = game_obj
-    NUM_ROUNDS = GAME.num_rounds
-    TOTAL_NUM_QS = GAME.num_rounds * GAME.num_questions
+    NUM_ROUNDS = GAME.get_num_rounds()
+    TOTAL_NUM_QS = GAME.get_num_rounds() * GAME.get_num_questions()
     total_score = 0
 
-    for round in GAME.rounds:
+    for round in GAME.get_rounds():
         round_score = 0
 
         clear()
         print(
-            f"Round {round.round_num}: {QUIZ_CATEGORIES[round.category]}")
+            f"Round {round.get_round_num()}: " +
+            f"{QUIZ_CATEGORIES[round.get_category()]}")
         sleep(2)
 
         for question in round.questions_list:
 
-            all_answers = (question.incorrect_answers +
-                            [question.correct_answer])
+            correct_answer = question.get_correct_answer()
+
+            all_answers = (question.get_incorrect_answers() +
+                           [question.get_correct_answer()])
 
             # Shuffle the Answers
             random.shuffle(all_answers)
 
             # Check the index of the correct answer, add 1 to match input
-            expected_answer = (all_answers.index(
-                question.correct_answer)) + 1
+            expected_answer = (all_answers.index(correct_answer)) + 1
 
             while True:
                 try:
                     sleep(1)
                     clear()
-                    print(question.question)
+                    print(f"{question.get_question()}\n")
 
                     for x in range(len(all_answers)):
                         print(f"({x+1}) {all_answers[x]}")
 
-                    answer = input("\n Answer: \n")
+                    answer = input("\nAnswer:\n\n")
 
                     if is_quit(answer):
                         return
@@ -70,8 +72,8 @@ def play_terminal_quiz(game_obj):
 
         total_score += round_score
         print(f"Round {round.round_num} over!")
-        print(f"You got {round_score} / {round.num_qs} correct "
-                f"in Round {round.round_num}.")
+        print(f"You got {round_score} / {round.get_num_qs()} correct "
+              f"in Round {round.get_round_num()}.")
         sleep(2)
 
     clear()
@@ -81,7 +83,8 @@ def play_terminal_quiz(game_obj):
     print(f".......................................\n")
     sleep(1)
     print(
-        f"You got a total of {total_score} / {TOTAL_NUM_QS} questions correct.\n")
+        f"You got a total of {total_score} /" +
+        f"{TOTAL_NUM_QS} questions correct.\n")
     sleep(1)
 
     ask_any_key()
