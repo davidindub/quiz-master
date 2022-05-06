@@ -56,6 +56,7 @@ def ask_any_key():
     return
 
 
+# Source: https://stackoverflow.com/questions/2084508/clear-terminal-in-python
 def clear():
     """
     Clears the Terminal Window
