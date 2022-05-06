@@ -1,26 +1,33 @@
 
-# QuizMaster
+# Quiz Master 2022
 
+[![](documentation/images/screenshot-welcome.png)](https://quiz-master-2022.herokuapp.com/)
 
 [Link to Live Site](https://quiz-master-2022.herokuapp.com/)
 
 
 ## Introduction
 
-The project is a Python command line application which can create quiz games using an consisting of several rounds based on the user's desired configuration.
+The project is a Python command line application which can create and play quiz games using an consisting of several rounds based on the user's desired configuration.
 
 The user can play along in the terminal, or export a quiz to Google Forms where they can share it with friends where they will be automatically graded.
+
+I was frustrated by the difficulties faced writing and grading a virtual table quiz and was inspired to make an application to automate the process.
 
 
 ## User Stories
 
 As a first time user, I need instructions on how to use the applications so I can use it.
 
-As a user, I want to be able to play a quick quiz round without leaving the terminal.
+As a user, I want to be able to play a quick quiz round without chosing any settings.
 
 As a quiz enthusiast I want to be able to build custom quizzes based on different categories.
 
-As a user, I want to be able to create a custom quiz to share and play with my friends.
+As a user running a virtual quiz, I want to be able to create a custom quiz to share and play with my friends.
+
+
+## 
+
 
 
 ## UX  
@@ -34,6 +41,8 @@ As a user, I want to be able to create a custom quiz to share and play with my f
 
 ### Wireframes
 
+![](documentation/images/wireframe-deploy.png)
+
 
 ## Features 
 
@@ -41,7 +50,57 @@ As a user, I want to be able to create a custom quiz to share and play with my f
 
 ***
 
+#### Main Menu
+
+```
+Main Menu
+_________
+
+Please choose from the following:
+
+(1) Play Quick Quiz Round
+(2) Create Custom Quiz
+(3) Create a Google Form Quiz
+(4) Help
+
+Press Enter to confirm your selection. 
+```
+
+The user is presented with four options and can select where to navigate to by entering the coresponding number.
+
+Validation is used to ensure they only enter a valid option.
+
+At any point after this menu, the user can enter `Quit` or `Q` to return back to the Main Menu.
+
+
+#### Play Quick Quiz Round
+
+The application creates a short quiz of 5 General Knowledge questions for the user to play immediately.
+
+
+#### Create Custom Quiz
+
+The user can select custom options for a quiz, and play through the quiz.
+
+
+#### Create Google Form Quiz
+
+The user can create a custom quiz, and they will recieve a Google Form link where they can play the Quiz and send it to friends for the purposes of running a virtual table quiz.
+
+Optionally, they can add their Google Account e-mail address to be added as a owner of the form, so they can see all the responses/results and edit the form if desired.
+
+
+#### Help
+
+This screen provides further information on using the application, with a detailed description of the different menu options.
+
+
 __Game Area__
+
+I wanted to write `create_quiz.py` to make it as reusable as possible, so it could easily be used in other Quiz projects. I took the data returned from the Open Trivia Database, and created Python objects using classes.
+
+A Game Object contains 1 or more Round objects, which in turn contain 1 or more Question objects. 
+
 
 ```python
 class Game:
@@ -90,7 +149,7 @@ class Question:
 
 ***
 
-__Google Drive Utility Menu__
+#### Google Drive Utility Menu
 
 - When building the project, I needed a way to use the Google Drive API to manage the forms created. I build a simple file management tool, and implemented it as a secret menu option from the Main Menu.
 
@@ -107,12 +166,18 @@ __Google Drive Utility Menu__
 
 ***
 
-__Favicon__
-
-
-***
 
 ### Features Left to Implement
+
+- The project could be built out to include 
+
+
+### Challenges Faced
+
+- The [Google Forms API](https://developers.google.com/forms) was only released in March 2022, the month before I started building the project. Unlike other products like Google Sheets, there was are no Python Packages released yet to simplify using the Forms API.
+- I had to build the project using just the documentation and there was a lack of any examples of the Forms API in use in a Python project yet.
+- I think there's great potential for a Google Forms API Package, and it's a project I would like to work on in future.
+- I faced difficulties with the encoding of the data from the API and escape characters appearing when I passed the data to Google Forms. I used `urllib.parse.urlparse` to parse the Quiz API data. Using square bracket notation to access the properties of the Quiz/Round/Game objects for the Google Form creation was introducing encoding errors, so I created methods on the objects that return the properies.
 
 
 ## Technologies Used
@@ -120,7 +185,7 @@ __Favicon__
 - [Python](https://www.python.org/)
 - [Git](https://git-scm.com/) for version control.
 - [GitHub](https://github.com/) for storing the repository online during development.
-- GitHub Projects was invaluable throughout the project and helped me keep track of things to do and bugs to fix - you can see [the project's board here](https://github.com/users/davidindub/projects/2).
+- GitHub Projects was invaluable throughout the project and helped me keep track of things to do and bugs to fix - you can see [the project's board here](https://github.com/users/davidindub/projects/3).
 - [GitPod](https://gitpod.io/) as a cloud based IDE.
 - [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) for creating and sharing the generated Google Forms.
 - [favicon.io](https://favicon.io/favicon-generator/) to make a favicon for site.
@@ -144,7 +209,7 @@ __Favicon__
 
 Due to a recent [security breach](https://status.heroku.com/incidents/2413) of Heroku OAuth Tokens, GitHub actions deployment to Heroku was disabled.
 
-<!-- procfile required - in template -->
+The required Procfile for Heroku was included in the Code Institute Python Essentials Template (see [Content](#credits) section)
 
 I instead deployed to Heroku using the Heroku CLI with the following steps
     - Create a new App in the Heroku web dashboard named 'quiz-master-2022'
@@ -160,17 +225,39 @@ In order to make a local copy of this project, you can clone it. In your IDE Ter
 
 - `git clone https://github.com/davidindub/quiz-master.git`
 
-<!-- CREATE OWN CLIENT_SECRETS ETC…………… & INSTALL PACKAGES INSTRUCTIONS pip3 install -r requirements.txt -->
 
 Alternatively, if using Gitpod, you can click below to create your own workspace using this repository.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/davidindub/quiz-master)
 
+***
+
+After cloning or opening the repository in Gitpod, you will need to:
+
+1. Create your own `creds.json` with the Google API details in this format:
+
+```json
+{
+    "type": "",
+    "project_id": "",
+    "private_key_id": "",
+    "private_key": "",
+    "client_email": "",
+    "client_id": "",
+    "auth_uri": "",
+    "token_uri": "",
+    "auth_provider_x509_cert_url": "",
+    "client_x509_cert_url": ""
+  }
+````
+
+2. Run `pip3 install -r requirements.txt` to install required Python packages.
 
 ## Credits 
 
 ### Content 
 
+- I began with the [Code Institute Python Essentials](https://github.com/Code-Institute-Org/python-essentials-template) template and customised the the HTML & CSS. The template allows the Python application to run in the browser using a terminal build with [Node.js](https://nodejs.org/en/).
 - [Open Trivia Database](https://opentdb.com/) for the quiz questions.
 - The code for the custom greeting based on the time of day I originally wrote for another application, [Coffee Calculator](https://github.com/davidindub/coffee-calculator/blob/main/greeting.py)
 - [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) documentation for their quickstart guides on using the APIs.

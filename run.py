@@ -69,7 +69,8 @@ def main():
     You can input your e-mail address and see the results as your friends
     submit their answers!
 
-
+    Enter "Quit" or "Q" at any time to return to the Main Menu.
+    
     See this project on GitHub at https://github.com/davidindub/quiz-master
     Quiz Master 2022 © David Kelly.
     """]

@@ -3,7 +3,7 @@ import requests
 import json
 import random
 import sys
-import html
+# import html
 import urllib.parse
 from termcolor import colored, cprint
 from pprint import pprint
