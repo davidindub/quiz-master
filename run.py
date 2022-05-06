@@ -52,7 +52,7 @@ def main():
 
 
     (1) Quick Quiz Round \n
-    Play a short Quiz of 5 General Knowledge Questions here in the terminal.
+    Play a short Quiz of 8 General Knowledge Questions here in the terminal.
 
     Chose an answer with the keys 1, 2, 3 or 4 and hit Enter.
     """,

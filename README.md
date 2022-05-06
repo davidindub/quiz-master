@@ -118,7 +118,7 @@ At any point after this menu, the user can enter `Quit` or `Q` to return back to
 
 #### Play Quick Quiz Round
 
-The application creates a short quiz of 5 General Knowledge questions for the user to play immediately.
+The application creates a short quiz of 8 General Knowledge questions for the user to play immediately.
 
 
 #### Create Custom Quiz
@@ -275,7 +275,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 <summary>As a quiz enthusiast I want to be able to build custom quizzes based on different categories.</summary>
 
 1. At the Main Menu, I see the first option is 'Play Quick Quiz Round'
-2. I input `1` to select it and press Enter, and I am immediately playing a short quiz of 5 questions.
+2. I input `1` to select it and press Enter, and I am immediately playing a short quiz of 8 questions.
 3. At the end of the quiz my result is displayed, and I can press any key to return to the Main Menu.
 
 ![](documentation/images/screenshot-quick-quiz.png)

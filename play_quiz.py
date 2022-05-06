@@ -84,7 +84,7 @@ def play_terminal_quiz(game_obj):
     sleep(1)
     print(
         f"You got a total of {total_score} /" +
-        f"{TOTAL_NUM_QS} questions correct.\n")
+        f" {TOTAL_NUM_QS} questions correct.\n")
     sleep(1)
 
     ask_any_key()
