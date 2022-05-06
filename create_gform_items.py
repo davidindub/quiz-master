@@ -120,10 +120,6 @@ def create_gform_round(round_obj):
     for question in questions:
         form_items.insert(0, create_gform_question(question))
 
-        f = open("test.txt", "a")
-        f.write(question.get_question() + "\n")
-        f.close()
-
     form_items.append(create_gform_page_break(round_num, category))
 
     return form_items

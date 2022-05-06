@@ -133,7 +133,7 @@ def create_google_form(game_obj):
 
     while ask_form_owner:
         email = input("\nPlease enter the e-mail address of your Google "
-                      "Account or enter Q to quit:\n")
+                      "Account or enter Q to quit:\n\n")
         email = email.lower()
 
         # Quit to main menu if user types Q or quit

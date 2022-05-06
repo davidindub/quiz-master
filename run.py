@@ -11,6 +11,7 @@ from play_quiz import *
 if os.path.exists("env.py"):
     import env  # noqa
 
+# Password for Secret Google Drive Utility
 SECRET = os.environ.get("ADMIN")
 
 
@@ -69,7 +70,7 @@ def main():
     submit their answers!
 
     Enter "Quit" or "Q" at any time to return to the Main Menu.
-    
+
     See this project on GitHub at https://github.com/davidindub/quiz-master
     Quiz Master 2022 © David Kelly.
     """]
@@ -85,7 +86,7 @@ def main():
         clear()
 
         # Main Menu:
-        print("Main Menu")
+        cprint("Main Menu", "white", "on_blue")
         print("_________\n")
 
         try:
@@ -126,14 +127,19 @@ def main():
 
             google_quiz = setup_new_quiz()
 
-            create_google_form(google_quiz)
+            try:
+                create_google_form(google_quiz)
+            except Exception:
+                cprint("There was an error with the Google Form API\n\n", "red")
+                print("Please try again later.")
 
             continue
         if response == 4:
             clear()
             tprint("HELP", font="o8")
             print(help_text[0])
-            input("Press any key to read more.\n")
+            cprint("Press any key to read more.", "white", "on_blue")
+            input()
             clear()
             print(help_text[1])
             ask_any_key()

@@ -1,6 +1,7 @@
 from os import system, name
 from time import sleep
 from datetime import datetime
+from termcolor import cprint
 
 now = datetime.now()
 current_hour = int(now.strftime("%H"))
@@ -17,7 +18,8 @@ def ask_yes_no(question):
     yes = ["yes", "y"]
     no = ["no", "n"]
 
-    print(f"\n{question} \n\ny/n\n")
+    print(f"\n{question}")
+    print(f"\n[Y/n]\n")
     while True:
         choice = input().lower()
         if choice in yes:
@@ -37,7 +39,7 @@ def is_quit(response):
     otherwise returns False.
     """
     if response.lower() in ["q", "quit"]:
-        if ask_yes_no("Would you like to return to the Main Menu?"):
+        if ask_yes_no("Would you like to return to the Main Menu?\n"):
             return True
         else:
             return False
@@ -49,7 +51,8 @@ def ask_any_key():
     """
     Ask the user to press any key to return to main menu
     """
-    input("Press any key to return to Main Menu.")
+    cprint("Press any key to return to Main Menu.", "white", "on_blue")
+    input()
     return
 
 

@@ -1,16 +1,19 @@
 from helpers import ask_any_key, ask_yes_no, clear, is_quit
 import requests
 import json
-import random
 import urllib.parse
 from termcolor import cprint
 from time import sleep
 
-CATEGORIES_DATA = json.loads(requests.get(
-    "https://opentdb.com/api_category.php").text)["trivia_categories"]
 
-SESSION_TOKEN = json.loads(requests.get(
-    "https://opentdb.com/api_token.php?command=request").text)["token"]
+def get_category_data():
+    """
+    Makes a call the the Quiz API and returns the list of available categories
+    """
+    result = json.loads(requests.get(
+        "https://opentdb.com/api_category.php").text)["trivia_categories"]
+
+    return result
 
 
 def create_categories_dict(categories_data):
@@ -30,7 +33,26 @@ def create_categories_dict(categories_data):
     return cats_dict
 
 
-QUIZ_CATEGORIES = create_categories_dict(CATEGORIES_DATA)
+def get_session_token():
+    """
+    Makes a call to the Quiz API for a Session token which keeps track of the
+    questions so the user doesn't receive the same question twice.
+    """
+    result = json.loads(requests.get(
+        "https://opentdb.com/api_token.php?command=request").text)["token"]
+
+    return result
+
+# Quiz API Setup
+try:
+    CATEGORIES_DATA = get_category_data()
+    QUIZ_CATEGORIES = create_categories_dict(CATEGORIES_DATA)
+    SESSION_TOKEN = get_session_token()
+except Exception:
+    cprint("🚫 The Quiz API could not be reached!\n", "red")
+    print("See https://opentdb.com/ \n")
+    print("Please try again later.")
+    quit()
 
 
 def get_quiz_questions(num_qs, cat, diff):
@@ -40,8 +62,10 @@ def get_quiz_questions(num_qs, cat, diff):
     question, correct_answer and incorrect_answers
     """
 
-    return json.loads(requests.get(
+    result = json.loads(requests.get(
         f"https://opentdb.com/api.php?amount={num_qs}&category={cat}&difficulty={diff}&type=multiple&token={SESSION_TOKEN}&encode=url3986").text)["results"]  # noqa
+
+    return result
 
 
 class Game:

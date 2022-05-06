@@ -14,6 +14,9 @@ DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 
 DRIVE_SERVICE = discovery.build("drive", "v3", credentials=SCOPED_CREDENTIALS)
 
+# Functions adapted from code in the Google Drive API Docs Quickstart Guide:
+# https://developers.google.com/drive/api/quickstart/python
+
 
 def delete_file(file_id):
     """Permanently delete a Google Drive file, skipping the trash.
@@ -89,7 +92,7 @@ def insert_permission(service, file_id, value, role):
         return service.permissions().create(
             fileId=file_id, body=new_permission).execute()
     except errors.HttpError as error:
-        print(f"An error occurred: {error}")
+        print(f"🚫 An error occurred: {error}")
         return
 
 
