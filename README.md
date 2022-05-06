@@ -323,12 +323,9 @@ As the categories list was too long for the deployed project's terminal, I creat
 
 ### Code Validation
 
-All the files pass PEP8 Validation.
+All the files pass PEP8 Validation, which I checked both in the development environment and on [PEP8 online](http://pep8online.com/).
 
 I used `# noqa` on line 66 of `create_quiz.py` ignore a line length warning on a long URL for an API call.
-
-
-http://pep8online.com/
 
 
 <details>
@@ -432,7 +429,11 @@ After cloning or opening the repository in Gitpod, you will need to:
   }
 ```
 
-2. Run `pip3 install -r requirements.txt` to install required Python packages.
+2. See [Develop on Google Workspace](https://developers.google.com/workspace/guides/get-started) for steps on creating a Google Cloud project and creating access credentials.
+
+You will need to enable the Google Forms and Google Drive APIs for your project.
+
+3. Run `pip3 install -r requirements.txt` to install required Python packages.
 
 ## Credits 
 
