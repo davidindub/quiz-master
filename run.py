@@ -1,7 +1,6 @@
 from art import tprint
 import os
 from time import sleep
-import sys
 from termcolor import colored, cprint
 import gdrive_utility
 from helpers import ask_any_key, ask_yes_no, clear, current_hour

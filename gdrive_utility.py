@@ -2,8 +2,7 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
 from googleapiclient.errors import HttpError
 from apiclient import discovery, errors
-import json
-from termcolor import colored, cprint
+from termcolor import cprint
 from helpers import ask_any_key, ask_yes_no, clear, is_quit
 
 CREDS = service_account.Credentials.from_service_account_file("creds.json")

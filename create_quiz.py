@@ -2,11 +2,8 @@ from helpers import ask_any_key, ask_yes_no, clear, is_quit
 import requests
 import json
 import random
-import sys
-# import html
 import urllib.parse
-from termcolor import colored, cprint
-from pprint import pprint
+from termcolor import cprint
 from time import sleep
 
 CATEGORIES_DATA = json.loads(requests.get(

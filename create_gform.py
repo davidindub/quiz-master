@@ -1,10 +1,9 @@
 from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
 from apiclient import discovery
-import json
 from email_validator import validate_email, EmailNotValidError
 from helpers import ask_yes_no, is_quit, now, clear, ask_any_key
-from termcolor import colored, cprint
+from termcolor import cprint
 from gdrive_utility import insert_permission, DRIVE_SERVICE
 from create_gform_items import (
     create_gform_question, create_gform_round,

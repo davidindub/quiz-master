@@ -1,6 +1,7 @@
 import random
 from time import sleep
 from art import tprint
+from termcolor import cprint
 from helpers import clear, ask_any_key, is_quit
 from create_quiz import QUIZ_CATEGORIES
 
@@ -57,14 +58,14 @@ def play_terminal_quiz(game_obj):
                     print("Please enter an answer 1, 2, 3 or 4")
                     continue
                 if answer == expected_answer:
-                    print("\n ✅ Correct! ✅ \n")
+                    cprint("\n ✅ Correct! ✅ \n", "green")
                     round_score += 1
                     break
                 if answer not in [1, 2, 3, 4]:
                     print("Please enter an answer 1, 2, 3 or 4")
                     continue
                 else:
-                    print("\n ❌ Wrong! ❌ \n")
+                    cprint("\n ❌ Wrong! ❌ \n", "red")
                     break
 
         total_score += round_score
