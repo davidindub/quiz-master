@@ -43,6 +43,7 @@ def get_session_token():
 
     return result
 
+
 # Quiz API Setup
 try:
     CATEGORIES_DATA = get_category_data()
@@ -336,6 +337,6 @@ def setup_new_quiz():
     if ask_yes_no("Are these settings correct?"):
         return game_obj
     else:
-        print("Okay, let's try again")
+        print("Okay, let's try again...")
         sleep(1)
         clear()

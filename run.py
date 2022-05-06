@@ -79,7 +79,7 @@ def main():
 
     tprint(" QUIZ\nMASTER\n 2022", font="o8")
 
-    cprint(f"{greeting} Welcome to Quiz Master 2022! \n", "green")
+    cprint(f"{greeting} Welcome to Quiz Master 2022! \n", "blue")
     sleep(2)
 
     while True:
@@ -130,7 +130,7 @@ def main():
             try:
                 create_google_form(google_quiz)
             except Exception:
-                cprint("There was an error with the Google Form API\n\n", "red")
+                cprint("There was an error with the Google Form API\n", "red")
                 print("Please try again later.")
 
             continue
