@@ -6,6 +6,34 @@
 [Link to Live Site](https://quiz-master-2022.herokuapp.com/)
 
 
+## Table of Contents
+- [Introduction](#introduction)
+- [User Stories](#user-stories)
+- [UX  ](#ux)
+  * [Typography](#typography)
+  * [Wireframes](#wireframes)
+- [Features ](#features)
+  * [Existing Features](#existing-features)
+    + [Main Menu](#main-menu)
+    + [Play Quick Quiz Round](#play-quick-quiz-round)
+    + [Create Custom Quiz](#create-custom-quiz)
+    + [Create Google Form Quiz](#create-google-form-quiz)
+    + [Help](#help)
+    + [Quiz Classes](#quiz-classes)
+    + [Google Drive Utility Menu](#google-drive-utility-menu)
+  * [Features Left to Implement](#features-left-to-implement)
+- [Technologies Used](#technologies-used)
+- [External Python Packages Used](#external-python-packages-used)
+- [Testing ](#testing)
+  * [User Story Testing](#user-story-testing)
+  * [Challenges Faced](#challenges-faced)
+  * [Code Validation](#code-validation)
+- [Deployment](#deployment)
+- [Credits ](#credits)
+  * [Content ](#content)
+  * [Media](#media)
+  * [Acknowledgements](#acknowledgements)
+
 ## Introduction
 
 The project is a Python command line application which can create and play quiz games using an consisting of several rounds based on the user's desired configuration.
@@ -19,7 +47,7 @@ I was frustrated by the difficulties faced writing and grading a virtual table q
 
 - As a first time user, I need instructions on how to use the applications so I can use it.
 
-- As a user, I want to be able to play a quick quiz round without chosing any settings.
+- As a user, I want to be able to play a quick quiz round without choosing any settings.
 
 - As a quiz enthusiast I want to be able to build custom quizzes based on different categories.
 
@@ -81,7 +109,7 @@ Please choose from the following:
 Press Enter to confirm your selection. 
 ```
 
-The user is presented with four options and can select where to navigate to by entering the coresponding number.
+The user is presented with four options and can select where to navigate to by entering the corresponding number.
 
 Validation is used to ensure they only enter a valid option.
 
@@ -100,7 +128,7 @@ The user can select custom options for a quiz, and play through the quiz.
 
 #### Create Google Form Quiz
 
-The user can create a custom quiz, and they will recieve a Google Form link where they can play the Quiz and send it to friends for the purposes of running a virtual table quiz.
+The user can create a custom quiz, and they will receive a Google Form link where they can play the Quiz and send it to friends for the purposes of running a virtual table quiz.
 
 Optionally, they can add their Google Account e-mail address to be added as a owner of the form, so they can see all the responses/results and edit the form if desired.
 
@@ -110,7 +138,7 @@ Optionally, they can add their Google Account e-mail address to be added as a ow
 This screen provides further information on using the application, with a detailed description of the different menu options.
 
 
-__Game Area__
+#### Quiz Classes
 
 I wanted to write `create_quiz.py` to make it as reusable as possible, so it could easily be used in other Quiz projects.
 
@@ -138,11 +166,11 @@ class Game:
 
 #### Google Drive Utility Menu
 
-- When building the project, I needed a way to use the Google Drive API to manage the forms created. I build a simple file management tool, and implemented it as a secret menu option from the Main Menu.
+- When building the project, I needed a way to use the Google Drive API to manage the forms created. I built a simple file management tool, and implemented it as a secret menu option from the Main Menu.
 
 - To access the Google Drive Utility, you enter 999 on the Main Menu and are then prompted for a password.
 
-- I implemented the administrator password similar to the API keys, storing it in a variable in `creds.json` file which wasn't pushed to Heroku. In the Heroku project settings I stored it as a Config Var, ensuring it is never publically exposed.
+- I implemented the administrator password similar to the API keys, storing it in a variable in the `creds.json` file which wasn't pushed to Heroku. In the Heroku project settings I stored it as a Config Var, ensuring it is never publicly exposed.
 
 - As the Utility is only available to an administrator, I have included screenshots below.
 
@@ -160,7 +188,7 @@ class Game:
 
 ### Features Left to Implement
 
-- The project could be built out to include 
+- The project could be built out to include a choice of sources for the Quiz Questions. I came across several interesting Quiz APIs and designed the Quiz objects to be reusable.
 
 
 ## Technologies Used
@@ -172,7 +200,7 @@ class Game:
 - GitHub Projects was invaluable throughout the project and helped me keep track of things to do and bugs to fix - you can see [the project's board here](https://github.com/users/davidindub/projects/3).
 - [GitPod](https://gitpod.io/) as a cloud based IDE.
 - [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) for creating and sharing the generated Google Forms.
-- [favicon.io](https://favicon.io/favicon-generator/) to make a favicon for site.
+- [Balsamiq](https://balsamiq.com/wireframes/) for wireframing the browser view.
 - [Google Chrome](https://www.google.com/intl/en_ie/chrome/), [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) and [Safari](https://www.apple.com/safari/) for testing on macOS Monterey.
 - [Lucid Chart](https://lucid.app/) for making flow charts.
 
@@ -187,14 +215,16 @@ class Game:
 
 ## Testing 
 
-I performed manual testing contiously as the application was being developed.
+I performed manual testing continuously as the application was being developed.
 
-I attempted many possible inputs that could distrupt the application. I used the package `email-validator` to validate the user's e-mail address should they want the Google Form shared with them. For instances where a "Y" or "N" was expected, I accepted "YES" or "NO" and lowercase versions of all.
+I attempted many possible inputs that could disrupt the application. I used the package `email-validator` to validate the user's e-mail address should they want the Google Form shared with them. For instances where a "Y" or "N" was expected, I accepted "YES" or "NO" and lowercase versions of all.
 While Loops were used to ask the user for input until an accepted value was entered (or the user quit by entering "Q", "QUIT" or lowercase versions of either). 
 
 I used the `pprint` package at some stages of development to more easily see objects I was printing to the terminal, but it wasn't used in the final application.
 
 I used test JSON quiz data stored in a variable to test the Google Forms creation functions as I was building them.
+
+The application requires the Open Trivia API to be available for all its features so if the API cannot be reached the application will quit with a message asking the user to try again later, and providing the URL of the Open Trivia API so they can check its status.
 
 <details>
 <summary>Screenshots with test data</summary>
@@ -206,9 +236,9 @@ I used test JSON quiz data stored in a variable to test the Google Forms creatio
 I initiated Game objects based on test data which was later removed, as well as relying on API calls.
 
 
-The [GitHub Issues](https://github.com/davidindub/quiz-master/issues) page of the repository was invaluble for tracking bugs found, and closing the issues when fixed. More of the bugs and issues discovered while developing can be seen here.
+The [GitHub Issues](https://github.com/davidindub/quiz-master/issues) page of the repository was invaluable for tracking bugs found, and closing the issues when fixed. More of the bugs and issues discovered while developing can be seen here.
 
-I deployed on Heroku early so I could see the final input as it differs to the terminal in my development environment.
+I deployed on Heroku early so I could see the final input as it differs from the terminal in my development environment.
 I had to limit the amount of text displayed at any time to prevent a scroll appearing, such as on the help screen and listing the available categories.
 
 As the categories list was too long for the deployed project's terminal, I created a variable `NUM_OF_CATS_TO_DISPLAY` and set it to 17 which limits the number displayed, hiding some of the more niche categories.
@@ -234,7 +264,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 
 <details>
 
-<summary>As a user, I want to be able to play a quick quiz round without chosing any settings.</summary>
+<summary>As a user, I want to be able to play a quick quiz round without choosing any settings.</summary>
 
 
 **Result:** Pass ✅
@@ -260,7 +290,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 1. At the Main Menu, I see the option to Create a Google Form Quiz.
 2. I input `3` to select it and press Enter, and I am taken to the Quiz setup.
 3. I am asked about the settings I want for my quiz; the quiz name, number of rounds, number of questions, categories, and difficulty of the questions.
-4. My settings are shown to me for confirmation, if I made a mistake or change my mind I can restart. I press `Y` to confirm.
+4. My settings are shown to me for confirmation, if I made a mistake or changed my mind I can restart. I press `Y` to confirm.
 5. A URL to the Google Form is shared with me.
 6. I input my e-mail address and the form is shared with me by email. Now I can see the responses as they come in and run my virtual quiz.
 
@@ -276,11 +306,11 @@ As the categories list was too long for the deployed project's terminal, I creat
 
 ### Challenges Faced
 
-- The [Google Forms API](https://developers.google.com/forms) was only released in March 2022, the month before I started building the project. Unlike other products like Google Sheets, there was are no Python Packages released yet to simplify using the Forms API.
+- The [Google Forms API](https://developers.google.com/forms) was only released in March 2022, the month before I started building the project and I was excited to use it, but unlike other products like Google Sheets, there was are no Python Packages released yet to simplify using the Forms API.
 - I had to build the project using just the documentation and there was a lack of any examples of the Forms API in use in a Python project yet.
 - I think there's great potential for a Google Forms API Package, and it's a project I would like to work on in future.
 
-- I faced difficulties with the encoding of the data from the API and escape characters appearing when I passed the data to Google Forms. I used `urllib.parse.urlparse` to parse the Quiz API data. Using square bracket notation to access the properties of the Quiz/Round/Game objects for the Google Form creation was introducing encoding errors, so I created methods on the objects that return the properies.
+- I faced difficulties with the encoding of the data from the API and escape characters appearing when I passed the data to Google Forms. I used `urllib.parse.urlparse` to parse the Quiz API data. Using square bracket notation to access the properties of the Quiz/Round/Game objects for the Google Form creation was introducing encoding errors, so I created methods on the objects that return the properties.
 
 <details>
 <summary>Screenshots with encoding issues</summary>
