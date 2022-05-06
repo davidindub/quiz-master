@@ -1,6 +1,6 @@
 from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
-from apiclient import discovery
+from apiclient import discovery, errors
 from email_validator import validate_email, EmailNotValidError
 from helpers import ask_yes_no, is_quit, now, clear, ask_any_key
 from termcolor import cprint
@@ -80,8 +80,11 @@ def add_item_to_gform(item, form_id):
             item
         ]
     }
-    FORM_SERVICE.forms().batchUpdate(
-        formId=form_id, body=body_text).execute()
+    try:
+        FORM_SERVICE.forms().batchUpdate(
+            formId=form_id, body=body_text).execute()
+    except errors.HttpError as error:
+        cprint(f"🚫 An error occurred: {error}", "red")
 
 
 def create_google_form(game_obj):
@@ -95,7 +98,8 @@ def create_google_form(game_obj):
     # Boilerplate code for initial form setup
     BOILER_PLATE = {
         "info": {
-            "title": "My New Quiz"
+            "title": game_obj.get_quiz_title(),
+            "documentTitle": game_obj.get_quiz_title()
         }
     }
 
@@ -128,8 +132,8 @@ def create_google_form(game_obj):
         "Would you like to be an owner of this form to see their responses?")
 
     while ask_form_owner:
-        email = input("Please enter the e-mail address of your Google Account "
-                      "or enter Q to quit:\n")
+        email = input("\nPlease enter the e-mail address of your Google "
+                      "Account or enter Q to quit:\n")
         email = email.lower()
 
         # Quit to main menu if user types Q or quit
@@ -142,7 +146,8 @@ def create_google_form(game_obj):
 
             ask_form_owner = False
             insert_permission(DRIVE_SERVICE, QUIZ_FORM_ID, email, "writer")
-            cprint("📨 An e-mail is on the way! Happy Quizzing!")
+            cprint("\n\n📨 An e-mail is on the way! Happy Quizzing!\n\n",
+                   "green")
 
             ask_any_key()
 
@@ -153,5 +158,5 @@ def create_google_form(game_obj):
             continue
 
         else:
-            print("📧 Please enter a valid e-mail address!")
+            cprint("📧 Please enter a valid e-mail address!", "red")
             continue
