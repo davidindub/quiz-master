@@ -43,7 +43,7 @@ The user can quit to the main menu at any stage, and validation is used on all i
 
 The terminal screen is regularly cleared to ensure the terminal doesn't get cluttered and confuse the user between input prompts.
 
-Coloured text was used sparingly for correct/incorrect answer messages and warnings.
+Coloured text was used for correct/incorrect answer messages and warnings.
 
 
 ### Typography
@@ -166,21 +166,22 @@ class Game:
 ## Technologies Used
 
 - [Python](https://www.python.org/)
+- [pip](https://pip.pypa.io/en/stable/) for installing Python packages.
 - [Git](https://git-scm.com/) for version control.
 - [GitHub](https://github.com/) for storing the repository online during development.
 - GitHub Projects was invaluable throughout the project and helped me keep track of things to do and bugs to fix - you can see [the project's board here](https://github.com/users/davidindub/projects/3).
 - [GitPod](https://gitpod.io/) as a cloud based IDE.
 - [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) for creating and sharing the generated Google Forms.
 - [favicon.io](https://favicon.io/favicon-generator/) to make a favicon for site.
-- [Google Chrome](https://www.google.com/intl/en_ie/chrome/), [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) and [Safari](https://www.apple.com/safari/) for testing on macOS Monterey, Windows 10, iOS 15, iPadOS 15 and Android 10.
-- [Concepts](https://concepts.app/en/) for sketching on an iPad.
+- [Google Chrome](https://www.google.com/intl/en_ie/chrome/), [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) and [Safari](https://www.apple.com/safari/) for testing on macOS Monterey.
 - [Lucid Chart](https://lucid.app/) for making flow charts.
 
-## Python Packages Used
+## External Python Packages Used
 
 - [termcolor](https://pypi.org/project/termcolor/) for colored terminal text.
 - [art](https://github.com/sepandhaghighi/art) - ASCII art library for ASCII text.
 - [google-auth](https://pypi.org/project/google-auth/) & [google.oauth2](https://google-auth.readthedocs.io/en/stable/reference/google.oauth2.html) for authenticating with Google APIs.
+- [apiclient](https://pypi.org/project/apiclient/) for API error handling.
 - [email-validator](https://pypi.org/project/email-validator/) for validating the user's e-mail address if they want the Google Form Quiz shared with their Google Account.
 
 
@@ -189,7 +190,7 @@ class Game:
 I performed manual testing contiously as the application was being developed.
 
 I attempted many possible inputs that could distrupt the application. I used the package `email-validator` to validate the user's e-mail address should they want the Google Form shared with them. For instances where a "Y" or "N" was expected, I accepted "YES" or "NO" and lowercase versions of all.
-While Loops were used to ask the user for input until an accepted value was entered (or the user quit by entering "Q", "QUIT" or lowercase versions of either)
+While Loops were used to ask the user for input until an accepted value was entered (or the user quit by entering "Q", "QUIT" or lowercase versions of either). 
 
 I used the `pprint` package at some stages of development to more easily see objects I was printing to the terminal, but it wasn't used in the final application.
 
@@ -205,7 +206,7 @@ I used test JSON quiz data stored in a variable to test the Google Forms creatio
 I initiated Game objects based on test data which was later removed, as well as relying on API calls.
 
 
-The [GitHub Issues](https://github.com/davidindub/quiz-master/issues) page of the repository was invaluble for tracking bugs found, and closing the issues when fixed.
+The [GitHub Issues](https://github.com/davidindub/quiz-master/issues) page of the repository was invaluble for tracking bugs found, and closing the issues when fixed. More of the bugs and issues discovered while developing can be seen here.
 
 I deployed on Heroku early so I could see the final input as it differs to the terminal in my development environment.
 I had to limit the amount of text displayed at any time to prevent a scroll appearing, such as on the help screen and listing the available categories.
@@ -217,6 +218,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 
 
 <details>
+
 <summary>As a first time user, I need instructions on how to use the applications so I can use it.</summary>
 
 1. At the Main Menu, I see the Help option, number 4.
@@ -231,6 +233,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 </details>
 
 <details>
+
 <summary>As a user, I want to be able to play a quick quiz round without chosing any settings.</summary>
 
 
@@ -238,6 +241,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 </details>
 
 <details>
+
 <summary>As a quiz enthusiast I want to be able to build custom quizzes based on different categories.</summary>
 
 1. At the Main Menu, I see the first option is 'Play Quick Quiz Round'
@@ -250,6 +254,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 </details>
 
 <details>
+
 <summary>As a user running a virtual quiz, I want to be able to create a custom quiz to share and play with my friends.</summary>
 
 1. At the Main Menu, I see the option to Create a Google Form Quiz.
@@ -267,7 +272,6 @@ As the categories list was too long for the deployed project's terminal, I creat
 
 **Result:** Pass ✅
 </details>
-
 
 
 ### Challenges Faced
@@ -291,7 +295,7 @@ As the categories list was too long for the deployed project's terminal, I creat
 
 All the files pass PEP8 Validation.
 
-I used `# noqa` on line 44 of `create_quiz.py` ignore a line length warning on a long URL for an API call.
+I used `# noqa` on line 66 of `create_quiz.py` ignore a line length warning on a long URL for an API call.
 
 
 http://pep8online.com/
