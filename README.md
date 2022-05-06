@@ -17,13 +17,13 @@ I was frustrated by the difficulties faced writing and grading a virtual table q
 
 ## User Stories
 
-As a first time user, I need instructions on how to use the applications so I can use it.
+- As a first time user, I need instructions on how to use the applications so I can use it.
 
-As a user, I want to be able to play a quick quiz round without chosing any settings.
+- As a user, I want to be able to play a quick quiz round without chosing any settings.
 
-As a quiz enthusiast I want to be able to build custom quizzes based on different categories.
+- As a quiz enthusiast I want to be able to build custom quizzes based on different categories.
 
-As a user running a virtual quiz, I want to be able to create a custom quiz to share and play with my friends.
+- As a user running a virtual quiz, I want to be able to create a custom quiz to share and play with my friends.
 
 
 ## 
@@ -32,11 +32,23 @@ As a user running a virtual quiz, I want to be able to create a custom quiz to s
 
 ## UX  
 
+I used Lucid Chart to plan the flow of the application before coding.
 
-### Colour Scheme
- 
+![Flow Chart of the Application](documentation/images/flow-chart-menu.png)
+
+
+To make the application easy to navigate, numbers are used for most responses unless the user needs to type a name for their Quiz.
+
+The user can quit to the main menu at any stage, and validation is used on all input to check inputs and ensure the application doesn't crash.
+
+The terminal screen is regularly cleared to ensure the terminal doesn't get cluttered and confuse the user between input prompts.
+
+Coloured text was used sparingly for correct/incorrect answer messages and warnings.
+
 
 ### Typography
+
+I chose Courier New (or other monospace font as fallback) to match the text of the Python Terminal, and as it is one of the most commonly available web-safe fonts.
 
 
 ### Wireframes
@@ -45,6 +57,7 @@ As a user running a virtual quiz, I want to be able to create a custom quiz to s
 
 
 ## Features 
+
 
 ### Existing Features
 
@@ -172,14 +185,6 @@ class Question:
 - The project could be built out to include 
 
 
-### Challenges Faced
-
-- The [Google Forms API](https://developers.google.com/forms) was only released in March 2022, the month before I started building the project. Unlike other products like Google Sheets, there was are no Python Packages released yet to simplify using the Forms API.
-- I had to build the project using just the documentation and there was a lack of any examples of the Forms API in use in a Python project yet.
-- I think there's great potential for a Google Forms API Package, and it's a project I would like to work on in future.
-- I faced difficulties with the encoding of the data from the API and escape characters appearing when I passed the data to Google Forms. I used `urllib.parse.urlparse` to parse the Quiz API data. Using square bracket notation to access the properties of the Quiz/Round/Game objects for the Google Form creation was introducing encoding errors, so I created methods on the objects that return the properies.
-
-
 ## Technologies Used
 
 - [Python](https://www.python.org/)
@@ -203,7 +208,37 @@ class Question:
 
 ## Testing 
 
-<!-- !!!!!! -->
+I performed manual testing contiously as the application was being developed.
+
+I used the `pprint` package at some stages of development to more easily see objects I was printing to the terminal.
+
+I used test JSON quiz data stored in a variable to test the Google Forms creation functions as I was building them.
+
+The [GitHub Issues](https://github.com/davidindub/quiz-master/issues) page of the repository was invaluble for tracking bugs found, and closing the issues when fixed.
+
+I deployed on Heroku early so I could see the final input as it differs to the terminal in my development environment.
+I had to limit the amount of text displayed at any time to prevent a scroll appearing, such as on the help screen and listing the available categories.
+
+
+### Challenges Faced
+
+- The [Google Forms API](https://developers.google.com/forms) was only released in March 2022, the month before I started building the project. Unlike other products like Google Sheets, there was are no Python Packages released yet to simplify using the Forms API.
+- I had to build the project using just the documentation and there was a lack of any examples of the Forms API in use in a Python project yet.
+- I think there's great potential for a Google Forms API Package, and it's a project I would like to work on in future.
+- I faced difficulties with the encoding of the data from the API and escape characters appearing when I passed the data to Google Forms. I used `urllib.parse.urlparse` to parse the Quiz API data. Using square bracket notation to access the properties of the Quiz/Round/Game objects for the Google Form creation was introducing encoding errors, so I created methods on the objects that return the properies.
+
+
+
+### Validation
+
+I used `# noqa` on line 44 of `create_quiz.py` ignore a line length warning on a long URL for an API call.
+
+http://pep8online.com/
+
+
+***
+
+
 
 ## Deployment
 
@@ -249,7 +284,7 @@ After cloning or opening the repository in Gitpod, you will need to:
     "auth_provider_x509_cert_url": "",
     "client_x509_cert_url": ""
   }
-````
+```
 
 2. Run `pip3 install -r requirements.txt` to install required Python packages.
 
@@ -261,6 +296,7 @@ After cloning or opening the repository in Gitpod, you will need to:
 - [Open Trivia Database](https://opentdb.com/) for the quiz questions.
 - The code for the custom greeting based on the time of day I originally wrote for another application, [Coffee Calculator](https://github.com/davidindub/coffee-calculator/blob/main/greeting.py)
 - [Google Forms API](https://developers.google.com/forms) and [Google Drive API](https://developers.google.com/drive) documentation for their quickstart guides on using the APIs.
+- [Stack Overflow: Clear terminal in Python](https://stackoverflow.com/questions/2084508/clear-terminal-in-python) for the code to clear the terminal screen.
 
 
 ### Media
