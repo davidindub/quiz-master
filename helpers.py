@@ -1,5 +1,10 @@
 from os import system, name
 from time import sleep
+from datetime import datetime
+
+
+now = datetime.now()
+current_hour = int(now.strftime("%H"))
 
 
 def ask_yes_no(question):

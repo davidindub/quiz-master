@@ -89,7 +89,7 @@ class Game:
 
         print(f"Quiz title: {self.quiz_title}\n{self.num_rounds}"
               f" rounds of {self.num_questions} {self.difficulty} questions.\n"
-              f"\n Categories are:\n")
+              f"\nCategories are:\n")
         print(*cats_text, sep=", ")
 
 

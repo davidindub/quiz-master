@@ -77,7 +77,8 @@ def insert_permission(service, file_id, value, role):
         service: Drive API service instance.
         file_id: int ID of the file to insert permission for.
         value:
-        string User or group e-mail address, domain name or None for "default" type.
+            string User or group e-mail address,
+            domain name or None for "default" type.
         role: The value "owner", "writer" or "reader".
     """
     new_permission = {
@@ -113,7 +114,7 @@ def run():
 
             if is_quit(response):
                 break
-            
+
             response = int(response)
 
         except ValueError:

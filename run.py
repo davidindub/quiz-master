@@ -1,12 +1,10 @@
 from art import tprint
-from datetime import datetime
-# from os import system, name, environ, path
 import os
 from time import sleep
 import sys
 from termcolor import colored, cprint
 import gdrive_utility
-from helpers import ask_any_key, ask_yes_no, clear
+from helpers import ask_any_key, ask_yes_no, clear, current_hour
 from create_gform import create_google_form
 from create_quiz import *
 from play_quiz import *
@@ -15,9 +13,6 @@ if os.path.exists("env.py"):
     import env  # noqa
 
 SECRET = os.environ.get("ADMIN")
-
-now = datetime.now()
-current_hour = int(now.strftime("%H"))
 
 
 def pick_greeting(hour):
@@ -29,7 +24,7 @@ def pick_greeting(hour):
     """
     if hour < 6:
         return "Wow, you're up late!"
-    elif hour < 12:
+    elif hour < 11:
         return "Good morning!"
     elif hour < 17:
         return "Good afternoon,"

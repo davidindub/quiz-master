@@ -3,14 +3,13 @@ from google.auth.transport.requests import AuthorizedSession
 from apiclient import discovery
 import json
 from email_validator import validate_email, EmailNotValidError
-from helpers import ask_yes_no, is_quit
+from helpers import ask_yes_no, is_quit, now, clear, ask_any_key
 from termcolor import colored, cprint
 from gdrive_utility import insert_permission, DRIVE_SERVICE
 from create_gform_items import (
     create_gform_question, create_gform_round,
     create_gform_text_question, create_gform_game)
 
-# https://google-auth.readthedocs.io/en/master/user-guide.html
 
 CREDS = service_account.Credentials.from_service_account_file("creds.json")
 
@@ -25,20 +24,7 @@ FORM_SERVICE = discovery.build("forms", "v1", credentials=SCOPED_CREDENTIALS,
 
 # End of Authorisation Code
 
-# Boilerplate code for initial form setup
-form = {
-    "info": {
-        "title": "My New Quiz"
-    }
-}
 
-# Creates the initial form
-QUIZ_FORM = FORM_SERVICE.forms().create(body=form).execute()
-QUIZ_FORM_ID = QUIZ_FORM["formId"]
-QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
-
-
-# Convert the form into a quiz & create and add all the questions
 def create_gform_body(game_obj):
     """
     Returns the request body to send to the Google Forms
@@ -49,6 +35,7 @@ def create_gform_body(game_obj):
     """
 
     form_questions = create_gform_game(game_obj)
+    todays_date = now.strftime("%x")
 
     body = {
         "requests": [
@@ -66,7 +53,10 @@ def create_gform_body(game_obj):
                 "updateFormInfo": {
                     "info": {
                         "title": game_obj.quiz_title,
-                        "description": f""
+                        "documentTitle": game_obj.quiz_title,
+                        "description": f"This quiz was generated using Quiz" +
+                        f" Master 2022 on {todays_date}.\n\n" +
+                        f"https://quiz-master-2022.herokuapp.com/"
                     },
                     "updateMask": "*"
                 }
@@ -95,8 +85,6 @@ def add_item_to_gform(item, form_id):
         formId=form_id, body=body_text).execute()
 
 
-# Updates the form
-
 def create_google_form(game_obj):
     """
     Create a new Google Form using a Quiz Game Object
@@ -104,6 +92,18 @@ def create_google_form(game_obj):
     Args:
     game_obj: A Quiz Game Object
     """
+
+    # Boilerplate code for initial form setup
+    BOILER_PLATE = {
+        "info": {
+            "title": "My New Quiz"
+        }
+    }
+
+    # Creates the initial form
+    QUIZ_FORM = FORM_SERVICE.forms().create(body=BOILER_PLATE).execute()
+    QUIZ_FORM_ID = QUIZ_FORM["formId"]
+    QUIZ_FORM_URL = QUIZ_FORM["responderUri"]
 
     update = create_gform_body(game_obj)
 
@@ -117,20 +117,21 @@ def create_google_form(game_obj):
     # Print the result to see it's now a quiz
     getresult = FORM_SERVICE.forms().get(formId=QUIZ_FORM["formId"]).execute()
 
-    print(f"Form ID: {QUIZ_FORM_ID}")
+    clear()
     cprint(f"Your Google Form Quiz is ready to share: \n", "green")
+    # print(f"Form ID: {QUIZ_FORM_ID}")
     print(f"{QUIZ_FORM_URL} \n")
 
     # Ask would the user like to see responses to the form
-    print("You can share this form with friends and see their responses")
+    print("You can now share this quiz form with friends!")
     ask_form_owner = False
     ask_form_owner = ask_yes_no(
-        "Would you like to be added as an owner of this form?")
+        "Would you like to be an owner of this form to see their responses?")
 
     while ask_form_owner:
-        input("Please enter the e-mail address of your Google Account "
-              "or enter Q to quit.\n\n")
-        email = input("E-mail Address: \n").lower()
+        email = input("Please enter the e-mail address of your Google Account "
+                      "or enter Q to quit:\n")
+        email = email.lower()
 
         # Quit to main menu if user types Q or quit
         if is_quit(email):
@@ -143,6 +144,8 @@ def create_google_form(game_obj):
             ask_form_owner = False
             insert_permission(DRIVE_SERVICE, QUIZ_FORM_ID, email, "writer")
             cprint("📨 An e-mail is on the way! Happy Quizzing!")
+
+            ask_any_key()
 
             break
 
